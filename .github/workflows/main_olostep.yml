@@ -6,7 +6,7 @@ name: Build and deploy Node.js app to Azure Web App - Olostep
 on:
   push:
     branches:
-      - Backend
+      - main
   workflow_dispatch:
 
 jobs:
@@ -57,9 +57,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F5A15E6F032F4E8E81E22B57510E749E }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F163F54D08624B0FA654D718733437B0 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3F660007C63E4DEFB89A17B5EF225D54 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A0E94D85A1844C86885A428AA92D6DFD }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_DC79DB93A73F4CB0897A8E413EF4150D }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3421A5C18E634041AC8724255D8F589A }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
