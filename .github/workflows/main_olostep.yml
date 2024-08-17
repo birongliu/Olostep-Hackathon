@@ -15,8 +15,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: 'Backend'
 
       - name: Set up Node.js version
         uses: actions/setup-node@v3
@@ -59,9 +57,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_A0E94D85A1844C86885A428AA92D6DFD }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_DC79DB93A73F4CB0897A8E413EF4150D }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3421A5C18E634041AC8724255D8F589A }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_AFF6959CFAF243AE80060326A81414A4 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_90DD3FE5C5114963A4C5C1115BB4D57B }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_05F6E0CE4B19448D86907D2F31F14852 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
