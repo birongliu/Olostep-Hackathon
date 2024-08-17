@@ -11,6 +11,7 @@ connectDB();
 app.use(express.json({ extended: false }));
 
 app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/scraper', require('./routes/scrapRoutes'));
 
 const PORT = process.env.PORT || 5000;
 
