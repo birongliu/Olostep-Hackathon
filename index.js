@@ -14,4 +14,10 @@ app.use('/api/auth', require('./routes/authRoutes'));
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.listen(PORT, () =>
+  console.log(`Your app is running at http://127.0.0.1:${PORT}`)
+);
+
+app.get('/', (req, res) => {
+  res.send('Your app is running successfully!');
+});
