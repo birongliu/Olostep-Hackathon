@@ -1,7 +1,7 @@
 
 "use client";
 import React, { useState, useEffect } from 'react';
-import { SignedOut, SignInButton, SignedIn, UserButton } from '@clerk/nextjs';
+import { SignInButton } from '@clerk/nextjs';
 
 export default function NewPage() {
   const [isClient, setIsClient] = useState<boolean>(false);
@@ -13,6 +13,7 @@ export default function NewPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
     // Handle URL submission logic here
     console.log('Submitted URL:', url);
   };
@@ -28,7 +29,7 @@ export default function NewPage() {
         
         {/* "SNAP LEARN AI" */}
         <div className="text-[3rem] md:text-[3rem] bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold uppercase mb-4 shadow-lg">
-          Ready to start scrabbing?
+          Ready to start scrapping?
         </div>
 
         {/* Description */}
@@ -53,7 +54,7 @@ export default function NewPage() {
         </div>
 
 
-        {/* Submit Buttons */}
+        {/* Submit Buttons, not done */}
         <div className="flex justify-center items-center">
           
           <div className="px-4 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition">
@@ -65,3 +66,5 @@ export default function NewPage() {
     </main>
   );
 }
+
+
