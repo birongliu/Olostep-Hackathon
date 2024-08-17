@@ -1,9 +1,16 @@
+const { signupSchema, loginSchema } = require('../middleware/validationMiddleware');
 const User = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
   const { username, email, password } = req.body;
+
+  const validationResult = signupSchema.safeParse({ username, email, password });
+
+  if (!validationResult.success) {
+    return res.status(400).json({ errors: validationResult.error.errors });
+  }
 
   try {
     let user = await User.findOne({ email });
@@ -42,6 +49,12 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+
+  const validationResult = loginSchema.safeParse({ email, password });
+
+  if (!validationResult.success) {
+    return res.status(400).json({ errors: validationResult.error.errors });
+  }
 
   try {
     let user = await User.findOne({ email });
