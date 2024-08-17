@@ -30,17 +30,18 @@ export default function NewPage() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-65"></div>
 
-      <div className="relative flex flex-col justify-center items-center w-full z-10">
+      <div className="relative flex flex-col justify-center items-center w-full z-10 px-4 md:px-8 lg:px-16">
         
  
         
-        {/* "SNAP LEARN AI" */}
-        <div className="text-[3rem] md:text-[3rem] bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold uppercase mb-4 shadow-lg">
-          Ready to start scrapping?
+        {/* "Ready o start" */}
+        <div className="text-[2rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold uppercase mb-4 shadow-lg px-4 md:px-6 lg:px-8 text-center">
+            Ready to start scrapping?
         </div>
+          
 
         {/* Description */}
-          <p className="relative uppercase tracking-widest text-2l bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold mb-8 shadow-lg text-center">
+          <p className="relative uppercase tracking-widest text-sm md:text-base lg:text-lg xl:text-xl bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent font-bold mb-6 md:mb-8 lg:mb-10 shadow-lg text-center">
             Please enter the url in this box below.
           </p>
 

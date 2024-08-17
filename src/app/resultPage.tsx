@@ -15,19 +15,19 @@ export default function ResultPage() {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-65"></div>
 
-      <div className="relative flex flex-col justify-center items-center w-full z-10">
+      <div className="relative flex flex-col justify-center items-center w-full z-10 px-4 md:px-8 lg:px-16">
+
         {/* Display Scraped Result */}
-        <div className="text-[2rem] md:text-[2rem] bg-white bg-opacity-80 text-black font-bold uppercase mb-4 shadow-lg p-4 rounded-lg">
-          {result ? result : 'No data scraped yet.'}
-        </div>
+
 
         {/* Scrap Another Link Button */}
-        <div className="flex justify-center items-center">
+        <div className="px-4 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition">
           <button
             onClick={handleScrapAnother}
-            className="px-4 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition"
+             className="w-full h-full"
           >
             Scrap Another Link
+            
           </button>
         </div>
       </div>
