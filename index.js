@@ -22,3 +22,7 @@ app.listen(PORT, () =>
 app.get('/', (req, res) => {
   res.send('Your app is running successfully!');
 });
+
+app.use((req, res) => {
+  res.status(404).json({ status: 404, message: 'No resource found' });
+});
