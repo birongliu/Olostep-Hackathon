@@ -1,7 +1,11 @@
 
 "use client";
 import React, { useState, useEffect } from 'react';
+
+//need this import
 import { SignInButton } from '@clerk/nextjs';
+
+//This is the home page of the website ocne user is log in
 
 export default function NewPage() {
   const [isClient, setIsClient] = useState<boolean>(false);
@@ -11,12 +15,15 @@ export default function NewPage() {
     setIsClient(true);
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleScraping = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Handle URL submission logic here
     console.log('Submitted URL:', url);
+
+    
   };
+
 
   return (
     <main className="relative flex w-full h-screen bg-[url('/img/background.png')] bg-cover bg-center">
@@ -58,9 +65,15 @@ export default function NewPage() {
         <div className="flex justify-center items-center">
           
           <div className="px-4 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition">
-
-            <SignInButton mode="modal">Start Scraping</SignInButton>
+            <button
+              onClick={handleScraping}  
+              className="w-full h-full"
+            >
+              Start Scraping
+            </button>
           </div>
+
+
         </div>
       </div>
     </main>

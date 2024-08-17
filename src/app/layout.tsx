@@ -16,7 +16,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 
-  title: "My-Scrapper",
+  title: "Scrapetastic",
   description: "A platform that takes any URL, scrapes the content, and extracts relevant data for display and analysis.",
 
 };

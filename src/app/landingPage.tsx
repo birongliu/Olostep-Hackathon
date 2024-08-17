@@ -18,7 +18,7 @@ const Page: React.FC = () => {
       <div className="relative flex flex-col justify-center items-center w-full z-10">
         
           {/* "Welcome to" with dot SVG */}
-          <div className="relative uppercase tracking-widest text-2xl bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold mb-4 shadow-lg flex items-center">
+          <div className="relative uppercase tracking-widest text-md bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold mb-4 shadow-lg flex items-center">
           {/* Dot SVG */}
 
           <div className="flex space-x-5">
@@ -54,11 +54,11 @@ const Page: React.FC = () => {
         
         {/* "SNAP LEARN AI" */}
         <div className="text-[5rem] md:text-[6rem] bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold uppercase mb-4 shadow-lg">
-          My-Scrapper
+        Scrapetastic
         </div>
 
         {/* "AI FLASHCARD MAKER" */}
-        <p className="relative uppercase tracking-widest text-2xl bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent font-bold mb-8 shadow-lg text-center">
+        <p className="relative uppercase tracking-widest text-md bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent font-bold mb-8 shadow-lg text-center">
           {isClient && (
             <div className="flex space-x-5 justify-center mb-4">
               <svg className="text-purple-400" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
