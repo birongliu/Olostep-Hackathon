@@ -1,55 +1,79 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
+interface DeepScrap {
+  context: {
+    title: string;
+    paragraphs: string[];
+  };
+  analysis: {
+    choices: {
+      message: {
+        content: string;
+      };
+      finish_reason: "stop";
+    }[];
+  };
+}
 export default function UrlPages() {
-  const [url, setUrl] = useState<string>('');
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [scrapedData, setScrapedData] = useState<{ allowedEndpoints: string[], disallowedEndpoints: string[] } | null>(null);
-  const [activeApi, setActiveApi] = useState<'scrap' | 'deep_scrap' | null>(null);
+  const [url, setUrl] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [scrapedData, setScrapedData] = useState<{
+    allowedEndpoints: string[];
+    disallowedEndpoints: string[];
+  } | null>(null);
+  const [data, setData] = useState<DeepScrap>();
+  const [activeApi, setActiveApi] = useState<"scrap" | "deep_scrap" | null>(
+    null
+  );
 
   //api request
   const handleScraping = async () => {
-    setActiveApi('scrap'); 
+    setActiveApi("scrap");
     try {
-      const response = await fetch('https://olostep-dkbyg7b0djf6dsdx.eastus-01.azurewebsites.net/api/scraper/scrap', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ url }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/scraper/scrap`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url }),
+        }
+      );
+      const responseData = await response.json();
 
-      if (response.ok) {
-        const data = await response.json();
-        setScrapedData(data);
-      } else {
-        console.error('Scraping failed:', response.statusText);
+      console.log(responseData);
+
+      if (responseData.status === 200) {
+        setScrapedData(responseData.data);
+        console.log(scrapedData);
       }
     } catch (error) {
-      console.error('Error during scraping:', error);
+      console.error("Error during scraping:", error);
     }
   };
 
   const handleSearch = async () => {
-    setActiveApi('deep_scrap'); 
+    setActiveApi("deep_scrap");
     try {
-      const response = await fetch('https://olostep-dkbyg7b0djf6dsdx.eastus-01.azurewebsites.net/api/scraper/deep_scrap', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ searchTerm }),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/scraper/deep_scrap`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url: searchTerm }),
+        }
+      );
 
-      if (response.ok) {
-        const data = await response.json();
-        setScrapedData(data);
-      } else {
-        console.error('Deep scraping failed:', response.statusText);
-      }
+      const ctx = await response.json();
+      console.log(ctx);
+      setData(ctx.data);
     } catch (error) {
-      console.error('Error during deep scraping:', error);
+      console.error("Error during deep scraping:", error);
     }
   };
 
@@ -61,25 +85,18 @@ export default function UrlPages() {
       <div className="relative flex flex-col justify-center items-center w-full z-10 px-4 md:px-8 lg:px-16">
         {/* "Ready to start" */}
         <div className="text-[2rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] bg-gradient-to-r from-purple-700 via-red-600 to-pink-500 bg-clip-text text-transparent font-bold uppercase mb-4 px-4 md:px-6 lg:px-8 text-center">
-         
-         
           Ready to start scrapping?
-       
         </div>
 
         {/* Description */}
         <p className="relative uppercase tracking-widest text-sm md:text-base lg:text-lg xl:text-xl bg-gradient-to-r from-purple-700 via-red-600 to-pink-600 bg-clip-text text-transparent font-bold mb-6 md:mb-8 lg:mb-10 text-center">
-         
           Please enter the URL in this box below.
-       
         </p>
 
         {/* URL Input Box */}
         <div className="w-full max-w-md px-4 py-4 bg-transparent rounded-lg">
           <form className="flex flex-col space-y-4">
             <input
-
-
               type="text"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
@@ -101,8 +118,6 @@ export default function UrlPages() {
 
         <div className="w-full max-w-md px-4 py-4 bg-transparent rounded-lg">
           <form className="flex flex-col space-y-4">
-           
-           
             <input
               type="text"
               value={searchTerm}
@@ -122,47 +137,75 @@ export default function UrlPages() {
         </div>
 
         {/* Display Scraped Results */}
-        {scrapedData && scrapedData.allowedEndpoints && scrapedData.disallowedEndpoints && (
+        <div className="grid grid-cols-1 md:grid-cols-2 h-screen overflow-auto gap-10 rounded">
+          {data && (
+            <>
+              <div className="flex rounded overflow-scroll flex-col text-black">
+                <div> Analysis </div>
+                <p className="bg-white overflow-auto p-2">
+                  {data?.analysis.choices[0].message.content}
+                </p>
+              </div>
+            </>
+          )}
+          {data && (
+               <>
+               <div className="flex rounded overflow-scroll flex-col text-black p-5 w-full">
+                 <div> Raw Data </div>
+                 <p className="bg-white overflow-auto p-2">
+                   {data?.context.title}
+                   {data?.context.paragraphs.map(k => (
+                    <p key={k}>{k}</p>
+                   ))}
+                 </p>
+               </div>
+             </>
+          )}
+        </div>
+      </div>
+    </main>
+  );
+}
+
+/**
+ *  {data && <div className="overflow-auto py-10">{data.analysis.choices[0].message.content}</div>}
+        {scrapedData && (
           <div className="w-full max-w-md px-4 py-4 bg-transparent rounded-lg mt-8">
-            <h2 className="text-lg font-bold mb-4">Scraped Results ({activeApi === 'scrap' ? 'Basic' : 'Deep'})</h2>
+            <h2 className="text-lg font-bold mb-4">
+              Scraped Results ({activeApi === "scrap" ? "Basic" : "Deep"})
+            </h2>
 
             <div className="mb-4">
               <h3 className="text-md font-semibold">Allowed Endpoints:</h3>
-             
-             
+
               <ul className="list-disc pl-5">
                 {scrapedData.allowedEndpoints.length > 0 ? (
                   scrapedData.allowedEndpoints.map((endpoint, index) => (
-                    <li key={index} className="text-green-500">{endpoint}</li>
+                    <li key={index} className="text-green-500">
+                      {endpoint}
+                    </li>
                   ))
                 ) : (
-                 
-                 
                   <li className="text-gray-500">No allowed endpoints found.</li>
                 )}
               </ul>
             </div>
             <div>
-             
-             
               <h3 className="text-md font-semibold">Disallowed Endpoints:</h3>
               <ul className="list-disc pl-5">
-               
                 {scrapedData.disallowedEndpoints.length > 0 ? (
                   scrapedData.disallowedEndpoints.map((endpoint, index) => (
-                    <li key={index} className="text-red-500">{endpoint}</li>
+                    <li key={index} className="text-red-500">
+                      {endpoint}
+                    </li>
                   ))
                 ) : (
-                  
-                  
-                  <li className="text-gray-500">No disallowed endpoints found.</li>
+                  <li className="text-gray-500">
+                    No disallowed endpoints found.
+                  </li>
                 )}
               </ul>
             </div>
           </div>
         )}
-
-      </div>
-    </main>
-  );
-}
+ */
