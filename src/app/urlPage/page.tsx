@@ -24,14 +24,10 @@ export default function UrlPages() {
     disallowedEndpoints: string[];
   } | null>(null);
   const [data, setData] = useState<DeepScrap>();
-  const [wait, setWait] = useState(false)
-  const [activeApi, setActiveApi] = useState<"scrap" | "deep_scrap" | null>(
-    null
-  );
+  const [wait, setWait] = useState(true)
 
   //api request
   const handleScraping = async () => {
-    setActiveApi("scrap");
     setWait(true)
     try {
       const response = await fetch(
@@ -48,7 +44,7 @@ export default function UrlPages() {
 
       if (responseData.status === 200) {
         setScrapedData(responseData.data);
-        setWait(false)
+        setWait((prev) => !prev)
       }
     } catch (error) {
       console.error("Error during scraping:", error);
