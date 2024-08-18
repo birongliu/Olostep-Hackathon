@@ -1,4 +1,4 @@
-Here's a `README.md` file tailored to your project:
+
 
 ```markdown
 # Web Scraper and AI Analysis Tool
@@ -28,7 +28,7 @@ This project is a web scraping and analysis tool that extracts data from given U
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/your-repo.git
+   git clone https://github.com/birongliu/Olostep-Hackathon.git
    cd your-repo
    ```
 
