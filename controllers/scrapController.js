@@ -9,12 +9,13 @@ const {
 const puppeteer = require('puppeteer-extra');
 const proxyPlugin = require('puppeteer-extra-plugin-proxy');
 const ScrapedData = require('../models/scrapModel');
+puppeteer.use(proxyPlugin)
 
 exports.scrap = async (req, res) => {
   const { url } = req.body;
 
   if (!url) {
-    return res.status(400).json({ error: 'URL is required' });
+    return res.status(400).json({ status: 400, data: 'URL is required' });
   }
 
   try {
@@ -28,7 +29,7 @@ exports.scrap = async (req, res) => {
       console.log('No endpoints found on the website.');
       return res
         .status(404)
-        .json({ message: 'No endpoints found on the website' });
+        .json({ status: 404, data: 'No endpoints found on the website' });
     }
 
     const { allowed, disallowed } = classifyEndpoints(links, robots);
@@ -40,12 +41,15 @@ exports.scrap = async (req, res) => {
     // disallowed.forEach((link) => console.log(link));
 
     res.json({
-      allowedEndpoints: allowed,
-      disallowedEndpoints: disallowed,
+      status: 200,
+      data: {
+        allowedEndpoints: allowed,
+        disallowedEndpoints: disallowed,
+      }
     });
   } catch (error) {
     console.error('Error during scraping:', error.message);
-    res.status(500).json({ error: 'An error occurred during scraping' });
+    res.status(500).json({ status: 500, data: 'An error occurred during scraping' });
   }
 };
 
@@ -113,25 +117,29 @@ exports.deep_scrap = async (req, res) => {
     const analysis = await analyzeData(data);
 
     if (data) {
+      // Filter out links without a valid href
       const filteredLinks = data.links
         .map(link => ({
           text: link.text,
           href: link.href,
         }))
-        .filter(link => link.href);
+        .filter(link => link.href); // Keep only links with a valid href
 
+      // Check if a record with the same URL already exists
       let scrapedData = await ScrapedData.findOne({ url });
 
       if (scrapedData) {
+        // Update the existing record
         scrapedData.title = data.title;
         scrapedData.headings = data.headings;
         scrapedData.links = filteredLinks;
         scrapedData.paragraphs = data.paragraphs;
         scrapedData.analysisSummary = analysis.choices[0]?.message?.content || '';
 
-        await scrapedData.save();
+        await scrapedData.save(); // Save the updated record
         console.log('Updated existing record for URL:', url);
       } else {
+        // Create a new instance of the ScrapedData model
         scrapedData = new ScrapedData({
           title: data.title,
           url: url,
@@ -141,13 +149,16 @@ exports.deep_scrap = async (req, res) => {
           analysisSummary: analysis.choices[0]?.message?.content || '',
         });
 
-        await scrapedData.save(); 
+        await scrapedData.save(); // Save the new record
         console.log('Saved new record for URL:', url);
       }
 
-      res.json({
-        data,
-        analysis,
+      return res.status(200).json({
+        status: 200,
+        data: {
+          context: data,
+          analysis,
+        }
       });
     } else {
       res.status(500).json({ error: 'Failed to scrape the URL' });
@@ -161,3 +172,4 @@ exports.deep_scrap = async (req, res) => {
     }
   }
 };
+
