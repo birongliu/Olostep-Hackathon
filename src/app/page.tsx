@@ -3,7 +3,60 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faInstagram, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 
+
+const creators = [
+  {
+    name: 'Pranitha Ramaswamy',
+    role: 'UI/UX Designer',
+    imageSrc: '/img/creator2.jpg',
+    // description: 'blah blah blah',
+    socialLinks: {
+      Github: 'https://github.com/pranitha05',
+      instagram: 'https://www.instagram.com/pranitha',
+      linkedin: 'https://www.linkedin.com/in/pranitha-r-276307251/',
+      twitter: 'https://twitter.com/pranitha',
+    },
+  },
+  {
+    name: 'Minh Le',
+    role: 'Front-End Developer',
+    imageSrc: '/img/creator1.png',
+    // description: 'blah blah blah',
+    socialLinks: {
+      Github: 'https://www.github.com/minh',
+      instagram: 'https://www.instagram.com/23_mpl_32/',
+      linkedin: 'www.linkedin.com/in/minhple373',
+      twitter: 'https://twitter.com/minh',
+    },
+  },
+  {
+    name: 'Asmaa HADAR',
+    role: 'Project manager & Back-End Developer',
+    imageSrc: '/img/creator3.png',
+    // description: 'blah blah blah',
+    socialLinks: {
+      Github: 'https://github.com/H-Asmaa',
+      instagram: 'https://www.instagram.com/asmaahadar2',
+      linkedin: 'https://www.linkedin.com/in/h-asmaa',
+      twitter: 'https://x.com/HadarAsmaa',
+    },
+  },
+  {
+    name: 'Bi Rong Liu',
+    role: 'Automation & DevOps Engineer',
+    imageSrc: '/img/creator4.jpg',
+    // description: 'blah blah blah',
+    socialLinks: {
+      Github: 'https://github.com/birongliu',
+      instagram: 'https://www.instagram.com/birong',
+      linkedin: 'https://www.linkedin.com/in/birong',
+      twitter: 'https://twitter.com/birong',
+    },
+  },
+];
 const Page: React.FC = () => {
   const [isClient, setIsClient] = useState<boolean>(false);
   const router = useRouter();
@@ -168,130 +221,55 @@ const Page: React.FC = () => {
       </section>
 
       {/* Creator Section */}
-
       <section id="creators" className="py-32 bg-gradient-to-r from-purple-800 via-blue-800 to-purple-800 text-white">
         <div className="container mx-auto px-6">
-
           <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Who are we?</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-
-
-            {/* Creator 1 */}
-            <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
-              <div className="mb-6">
-
-                <Image
-                  className="w-64 h-64 object-cover rounded-md"
-                  src="/img/creator2.jpg"
-                  alt="Creator 1"
-                  width={256}
-                  height={256}
-                  loading="lazy"
-                  style={{ borderRadius: '0.375rem' }}
-                />
+            {creators.map((creator, index) => (
+              <div key={index} className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
+                <div className="mb-6">
+                  <Image
+                    className="w-64 h-64 object-cover rounded-md"
+                    src={creator.imageSrc}
+                    alt={creator.name}
+                    width={256}
+                    height={256}
+                    loading="lazy"
+                    style={{ borderRadius: '0.375rem' }}
+                  />
+                </div>
+                <div className="mb-4">
+                  <strong className="text-1xl md:text-2xl block mb-2">{creator.name}</strong>
+                  <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">{creator.role}</span>
+                  <span className="inline-block w-16 h-1 bg-gray-700"></span>
+                </div>
+                <div className="flex justify-center space-x-4 text-gray-400">
+                  {creator.socialLinks.Github && (
+                    <a href={creator.socialLinks.Github} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                      <FontAwesomeIcon icon={faGithub} size="2x" />
+                    </a>
+                  )}
+                  {creator.socialLinks.instagram && (
+                    <a href={creator.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                      <FontAwesomeIcon icon={faInstagram} size="2x" />
+                    </a>
+                  )}
+                  {creator.socialLinks.linkedin && (
+                    <a href={creator.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                      <FontAwesomeIcon icon={faLinkedin} size="2x" />
+                    </a>
+                  )}
+                  {creator.socialLinks.twitter && (
+                    <a href={creator.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-white">
+                      <FontAwesomeIcon icon={faTwitter} size="2x" />
+                    </a>
+                  )}
+                </div>
               </div>
-              <div className="mb-4">
-
-                <strong className="text-1xl md:text-2xl block mb-2">Pranitha Ramaswamy</strong>
-                <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">UI/UX Designer</span>
-
-                <span className="inline-block w-16 h-1 bg-gray-700"></span>
-              </div>
-
-              <div className="text-gray-200">
-                &quot;blah blah blah&quot;
-              </div>
-
-            </div>
-            {/* Creator 2 */}
-            <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
-
-              <div className="mb-6">
-
-                <Image
-                  className="w-64 h-64 object-cover rounded-md"
-                  src="/img/creator1.png"
-                  alt="Creator 2"
-                  width={256}
-                  height={256}
-                  loading="lazy"
-                  style={{ borderRadius: '0.375rem' }}
-                />
-              </div>
-
-              <div className="mb-4">
-
-                <strong className="text-1xl md:text-2xl block mb-2">Minh Le</strong>
-                <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">Lead Developer</span>
-                <span className="inline-block w-16 h-1 bg-gray-700"></span>
-
-              </div>
-
-              <div className="text-gray-200">
-
-                blah blah blah
-              </div>
-            </div>
-            {/* Creator 3 */}
-            <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
-
-              <div className="mb-6">
-                <Image
-                  className="w-64 h-64 object-cover rounded-md"
-                  src="/img/creator1.jpg"
-                  alt="Creator 3"
-                  width={256}
-                  height={256}
-                  loading="lazy"
-                  style={{ borderRadius: '0.375rem' }}
-                />
-
-              </div>
-              <div className="mb-4">
-
-                <strong className="text-1xl md:text-2xl block mb-2">Bi Rong Liu</strong>
-                <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">Backend Engineer</span>
-                <span className="inline-block w-16 h-1 bg-gray-700"></span>
-
-              </div>
-
-              <div className="text-gray-200">
-
-                blah blah blah
-              </div>
-            </div>
-            {/* Creator 4 */}
-            <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
-              <div className="mb-6">
-
-                <Image
-                  className="w-64 h-64 object-cover rounded-md"
-                  src="/img/creator4.jpg"
-                  alt="Creator 4"
-                  width={256}
-                  height={256}
-                  loading="lazy"
-
-                  style={{ borderRadius: '0.375rem' }}
-                />
-              </div>
-
-              <div className="mb-4">
-
-                <strong className="text-1xl md:text-2xl block mb-2">Asmaa Hadar</strong>
-                <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">Marketing Specialist</span>
-                <span className="inline-block w-16 h-1 bg-gray-700"></span>
-
-              </div>
-
-              <div className="text-gray-200">
-
-                blah blah blah
-              </div>
-            </div>
+            ))}
           </div>
         </div>
-      </section>
+    </section>
 
     {/* Contact Section */}
     <section className="py-16 bg-gray-100">
