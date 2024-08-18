@@ -195,7 +195,7 @@ const Page: React.FC = () => {
               
                 <Image
                   className="w-64 h-64 object-cover rounded-md"
-                  src="/img/creator3.jpg" 
+                  src="/img/creator1.png" 
                   alt="Creator 2"
                   width={256}  
                   height={256} 
@@ -206,7 +206,7 @@ const Page: React.FC = () => {
               
               <div className="mb-4">
               
-                <strong className="text-1xl md:text-2xl block mb-2">Lennard Cohen</strong>
+                <strong className="text-1xl md:text-2xl block mb-2">Minh Le</strong>
                 <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">Lead Developer</span>
                 <span className="inline-block w-16 h-1 bg-gray-700"></span>
               
@@ -229,7 +229,7 @@ const Page: React.FC = () => {
               </div>
               <div className="mb-4">
               
-                <strong className="text-1xl md:text-2xl block mb-2">William Henry</strong>
+                <strong className="text-1xl md:text-2xl block mb-2">Bi Rong Liu</strong>
                 <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">Backend Engineer</span>
                 <span className="inline-block w-16 h-1 bg-gray-700"></span>
               
@@ -253,7 +253,7 @@ const Page: React.FC = () => {
               
               <div className="mb-4">
               
-                <strong className="text-1xl md:text-2xl block mb-2">Julia Mendez</strong>
+                <strong className="text-1xl md:text-2xl block mb-2">Asmaa Hadar</strong>
                 <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">Marketing Specialist</span>
                 <span className="inline-block w-16 h-1 bg-gray-700"></span>
               
