@@ -221,55 +221,56 @@ const Page: React.FC = () => {
       </section>
 
       {/* Creator Section */}
+
+  
+      {/* Creator Section */}
       <section id="creators" className="py-32 bg-gradient-to-r from-purple-800 via-blue-800 to-purple-800 text-white">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Who are we?</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {creators.map((creator, index) => (
-              <div key={index} className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
-                <div className="mb-6">
-                  <Image
-                    className="w-64 h-64 object-cover rounded-md"
-                    src={creator.imageSrc}
-                    alt={creator.name}
-                    width={256}
-                    height={256}
-                    loading="lazy"
-                    style={{ borderRadius: '0.375rem' }}
-                  />
+          <h2 className="text-4xl text-center font-bold mb-16">Meet the Creators</h2>
+         
+            <div className="flex flex-wrap justify-center">
+              {creators.map((creator, index) => (
+                <div key={index} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4 mb-8">
+                  <div className="bg-white p-6 rounded-lg shadow-lg text-center h-full flex flex-col">
+                    <Image
+                      src={creator.imageSrc}
+                      alt={creator.name}
+                      width={150}
+                      height={150}
+                      className="rounded-full mx-auto mb-4"
+                    />
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">{creator.name}</h3>
+                    <p className="text-gray-700 mb-4">{creator.role}</p>
+                    {/* <p className="text-gray-600 mb-4 flex-grow">{creator.description}</p> */}
+                    <div className="flex justify-center space-x-4">
+                      {creator.socialLinks.Github && (
+                        <a href={creator.socialLinks.Github} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800">
+                          <FontAwesomeIcon icon={faGithub} size="2x" />
+                        </a>
+                      )}
+                      {creator.socialLinks.instagram && (
+                        <a href={creator.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="text-pink-600 hover:text-pink-800">
+                          <FontAwesomeIcon icon={faInstagram} size="2x" />
+                        </a>
+                      )}
+                      {creator.socialLinks.linkedin && (
+                        <a href={creator.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900">
+                          <FontAwesomeIcon icon={faLinkedin} size="2x" />
+                        </a>
+                      )}
+                      {creator.socialLinks.twitter && (
+                        <a href={creator.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-600">
+                          <FontAwesomeIcon icon={faTwitter} size="2x" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div className="mb-4">
-                  <strong className="text-1xl md:text-2xl block mb-2">{creator.name}</strong>
-                  <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">{creator.role}</span>
-                  <span className="inline-block w-16 h-1 bg-gray-700"></span>
-                </div>
-                <div className="flex justify-center space-x-4 text-gray-400">
-                  {creator.socialLinks.Github && (
-                    <a href={creator.socialLinks.Github} target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                      <FontAwesomeIcon icon={faGithub} size="2x" />
-                    </a>
-                  )}
-                  {creator.socialLinks.instagram && (
-                    <a href={creator.socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                      <FontAwesomeIcon icon={faInstagram} size="2x" />
-                    </a>
-                  )}
-                  {creator.socialLinks.linkedin && (
-                    <a href={creator.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                      <FontAwesomeIcon icon={faLinkedin} size="2x" />
-                    </a>
-                  )}
-                  {creator.socialLinks.twitter && (
-                    <a href={creator.socialLinks.twitter} target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                      <FontAwesomeIcon icon={faTwitter} size="2x" />
-                    </a>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          
         </div>
-    </section>
+      </section>
 
     {/* Contact Section */}
     <section className="py-16 bg-gray-100">
