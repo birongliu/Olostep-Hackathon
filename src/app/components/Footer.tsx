@@ -11,11 +11,11 @@ const Footer: React.FC = () => {
             Copyright &copy; Scrapetastic 2024
           </div>
           <div className="mt-2 sm:mt-0 text-sm">
-            <a className="mx-2 hover:text-purple-300" href="#!">Privacy</a>
+            <a className="mx-2 hover:text-blue-300" href="#!">Privacy</a>
             <span>&middot;</span>
-            <a className="mx-2 hover:text-purple-300" href="#!">Terms</a>
+            <a className="mx-2 hover:text-blue-300" href="#!">Terms</a>
             <span>&middot;</span>
-            <a className="mx-2 hover:text-purple-300" href="#!">Contact</a>
+            <a className="mx-2 hover:text-blue-300" href="#!">Contact</a>
           </div>
         </div>
       </div>
