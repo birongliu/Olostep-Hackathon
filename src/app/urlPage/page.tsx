@@ -48,7 +48,6 @@ export default function UrlPages() {
 
       if (responseData.status === 200) {
         setScrapedData(responseData.data);
-        console.log(scrapedData);
       }
     } catch (error) {
       console.error("Error during scraping:", error);
@@ -70,7 +69,6 @@ export default function UrlPages() {
       );
 
       const ctx = await response.json();
-      console.log(ctx);
       setData(ctx.data);
     } catch (error) {
       console.error("Error during deep scraping:", error);
