@@ -21,7 +21,7 @@ const Page: React.FC = () => {
     <main className="relative flex w-full h-screen bg-[url('/img/background.png')] bg-cover bg-center">
       
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black opacity-65"></div>
+      <div className="absolute inset-0 bg-black opacity-60"></div>
 
       <div className="relative flex flex-col justify-center items-center w-full z-10 px-4 md:px-8 lg:px-16">
         

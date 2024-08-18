@@ -15,7 +15,7 @@ export default function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 p-4 bg-transparent text-white flex justify-between items-center z-50">
       
-      <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent cursor-pointer"
+      <h1 className="ml-4 text-2xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent cursor-pointer"
        onClick={handleLogoClick}>
 
       Myscraper
@@ -25,7 +25,7 @@ export default function Header() {
         <SignedOut>
 
 
-          <div className="px-4 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition">
+          <div className="mr-4 px-2 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition">
             <SignInButton mode="modal">Log in</SignInButton>
           </div>
 
@@ -34,7 +34,7 @@ export default function Header() {
 
         <SignedIn>
 
-          <div className="px-4 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition">
+          <div className="mr-4 px-2 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition">
             <UserButton showName />
           </div>
 
