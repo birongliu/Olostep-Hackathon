@@ -50,6 +50,7 @@ function classifyEndpoints(links, robots) {
   return { allowed, disallowed };
 }
 async function extractAndSaveData(page) {
+  console.log(page)
   const pageContent = await page.content();
   console.log('Full page content:\n', pageContent);
   try {

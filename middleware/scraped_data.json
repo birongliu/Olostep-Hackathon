@@ -1,0 +1,43 @@
+{
+  "title": "birongliu",
+  "headings": [
+    "ABOUT ME",
+    "TECHNOLOGY",
+    "EmpowerED",
+    "Pantry Tracker",
+    "Contact Me"
+  ],
+  "links": [
+    {
+      "text": "B",
+      "href": "https://www.birongliu.dev/#home"
+    },
+    {
+      "text": "About",
+      "href": "https://www.birongliu.dev/#about"
+    },
+    {
+      "text": "Project",
+      "href": "https://www.birongliu.dev/#project"
+    },
+    {
+      "text": "Contact",
+      "href": "https://www.birongliu.dev/#contact"
+    },
+    {
+      "text": "Download Resume",
+      "href": "https://www.birongliu.dev/birongliu-resume.pdf"
+    },
+    {
+      "text": "Contact Me",
+      "href": "https://www.birongliu.dev/#contact"
+    }
+  ],
+  "paragraphs": [
+    "Full Stack Developer | Based in NYC",
+    "I am passionate about creating Web Apps with UI/UX User Interface, I specialize in a wide range of programming languages and technologies. My experience includes developing full-stack web applications, where I've honed my skills in using React, Express, and PostgreSQL, among others.",
+    "An interactive education website to enhance personalized learning through gamified activities for underrepresented students",
+    "A web app that helps you manage your food inventory and snacks efficiently. Easily monitor the quantity, category, and status of your pantry items to ensure you never run out of your favorite foods.",
+    "Thanks for taking the time to explore my website! I'm always looking for new opportunities to connect and collaborate. If you're interested in discussing projects, ideas, or just want to say hi, please don't hesitate to reach out."
+  ]
+}
