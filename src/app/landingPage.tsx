@@ -26,8 +26,8 @@ const creators = [
     // description: 'blah blah blah',
     socialLinks: {
       Github: 'https://www.github.com/minh',
-      instagram: 'https://www.instagram.com/minh',
-      linkedin: 'https://www.linkedin.com/in/minh',
+      instagram: 'https://www.instagram.com/23_mpl_32/',
+      linkedin: 'www.linkedin.com/in/minhple373',
       twitter: 'https://twitter.com/minh',
     },
   },
