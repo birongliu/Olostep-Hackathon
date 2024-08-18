@@ -1,84 +1,110 @@
-
 "use client";
-import React, { useState, useEffect } from 'react';
 
-//need this import
-import { SignInButton } from '@clerk/nextjs';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation'; 
 
-//This is the home page of the website ocne user is log in
 
-export default function NewPage() {
+const Page: React.FC = () => {
   const [isClient, setIsClient] = useState<boolean>(false);
-  const [url, setUrl] = useState<string>('');
+  const router = useRouter(); 
 
   useEffect(() => {
     setIsClient(true);
   }, []);
 
-  const handleScraping = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    // Handle URL submission logic here
-    console.log('Submitted URL:', url);
-
-    
+  const handleScraping = () => {
+    router.push('/urlPage'); // Navigate to /urlPage
   };
-
+  
 
   return (
     <main className="relative flex w-full h-screen bg-[url('/img/background.png')] bg-cover bg-center">
+      
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-65"></div>
 
       <div className="relative flex flex-col justify-center items-center w-full z-10 px-4 md:px-8 lg:px-16">
         
- 
+          {/* "Welcome to" with dot SVG */}
+          <div className="relative uppercase tracking-widest text-md bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold mb-4 shadow-lg flex items-center">
+          
+          {/* Dot SVG */}
+
+          <div className="flex space-x-3 md:space-x-4 lg:space-x-5">
+
+            <svg className="text-yellow-600 " width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="4" fill="currentColor"/>
+            </svg>
+
+            <svg className="text-yellow-500" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="4" fill="currentColor"/>
+            </svg>
+
+            <svg className="text-yellow-400 mr-2" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="4" fill="currentColor"/>
+            </svg>
+
+          </div>
+
+          {/* "Welcome to" Text */}
+          <span className="ml-2 md:ml-4 mr-2 md:mr-4 text-sm md:text-base lg:text-lg xl:text-xl bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold uppercase">
+            Welcome to
+          </span>
+          
+          <div className="flex space-x-3 md:space-x-4 lg:space-x-5">
+            <svg className="text-yellow-400" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="4" fill="currentColor"/>
+            </svg>
+            <svg className="text-yellow-500" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="4" fill="currentColor"/>
+            </svg>
+            <svg className="text-yellow-600" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="4" fill="currentColor"/>
+            </svg>
+          </div>
+        </div>
         
-        {/* "Ready o start" */}
-        <div className="text-[2rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold uppercase mb-4 shadow-lg px-4 md:px-6 lg:px-8 text-center">
-            Ready to start scrapping?
+        {/* "SScrapetastic" */}
+        <div className="text-[3rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem] bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold uppercase mb-4 shadow-lg px-4 md:px-6 lg:px-8 text-center">
+          Scrapetastic
         </div>
+
+
+        {/* " Description" */}
+        <p className="relative uppercase tracking-widest text-sm md:text-base lg:text-lg xl:text-xl bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent font-bold mb-6 md:mb-8 lg:mb-10 shadow-lg text-center">
           
+          {isClient && (
+            <div className="flex space-x-2 md:space-x-3 lg:space-x-4 justify-center mb-4">
+              <svg className="text-purple-400" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="4" fill="currentColor"/>
+              </svg>
+              <svg className="text-purple-500" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="4" fill="currentColor"/>
+              </svg>
+              <svg className="text-purple-600" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="4" fill="currentColor"/>
+              </svg>
+            </div>
 
-        {/* Description */}
-          <p className="relative uppercase tracking-widest text-sm md:text-base lg:text-lg xl:text-xl bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent font-bold mb-6 md:mb-8 lg:mb-10 shadow-lg text-center">
-            Please enter the url in this box below.
-          </p>
-
-        {/* URL Input Box */}
-
-        <div className="w-full max-w-md px-4 py-4 bg-transparent rounded-lg">
-          <form className="flex flex-col space-y-4">
-            <input
-            
-            type="text"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="Enter URL here..."
-              className="w-full p-3 rounded-lg text-black bg-white bg-opacity-80 border-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-300 ease-in-out"
-            
-            />
-          </form>
-        </div>
+          )}
+          A platform that turns any webpage into actionable data with just a click!
+        </p>
 
 
-        {/* Submit Buttons, not done */}
+  {/* Buttons */}
         <div className="flex justify-center items-center">
-          
-          <div className="px-4 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition">
+          <div className="px-4 py-3 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition">
             <button
-              onClick={handleScraping}  
+              onClick={handleScraping}
               className="w-full h-full"
             >
               Start Scraping
             </button>
           </div>
-
-
         </div>
       </div>
     </main>
   );
-}
+};
 
-
+export default Page;

@@ -1,15 +1,13 @@
 "use client";
-import React from 'react';
-import { useRouter } from 'next/router';
+
+import { useRouter } from 'next/navigation'; 
 
 export default function ResultPage() {
-  const router = useRouter();
-  const { result } = router.query; // Get the result from the query parameters
+  const router = useRouter(); 
 
   const handleScrapAnother = () => {
-    router.push('/'); // Redirects back to the home page
+    router.push('/urlPage'); // Navigate to /urlPage
   };
-
   return (
     <main className="relative flex w-full h-screen bg-[url('/img/background.png')] bg-cover bg-center">
       {/* Overlay */}
@@ -34,3 +32,4 @@ export default function ResultPage() {
     </main>
   );
 }
+

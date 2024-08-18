@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { SignedOut, SignInButton, SignedIn, UserButton } from '@clerk/nextjs';
+import { SignInButton} from '@clerk/nextjs';
 
 const Page: React.FC = () => {
   const [isClient, setIsClient] = useState<boolean>(false);
