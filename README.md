@@ -30,7 +30,7 @@ This project is a comprehensive web scraping and analysis tool that automates th
 - **Multi-language Support:** Adding multi-language support to broaden the tool's applicability to non-English websites and users.
 - **Dashboard Analytics:** Developing a dashboard that visualizes key metrics from scraped data, providing users with graphical insights at a glance.
 - **AI Model Upgrades:** Regular updates to the AI model to leverage the latest advancements in natural language processing, improving the quality and depth of analysis.
-
+![Sample Image](assets/sample.png)
 ### Access the Website:
 Explore the tool and its capabilities at: [Olostep Hackathon](https://olostep-hackathon.vercel.app/)
 
