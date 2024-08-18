@@ -133,7 +133,7 @@ const InfoPage: React.FC = () => {
           <p className="text-center max-w-full md:max-w-2xl lg:max-w-3xl text-lg md:text-xl leading-relaxed text-gray-800 px-4">
               
               Scrapetastic is your go-to tool for transforming any webpage into valuable data with ease. Simply provide a URL, and our platform will effortlessly scrape the content, 
-              store it, and display it for you to explore. Whether you're a developer, researcher, or just curious, Scrapetastic makes web scraping simple and accessible.
+              store it, and display it for you to explore. Whether you&apos;re a developer, researcher, or just curious, Scrapetastic makes web scraping simple and accessible.
               Stay tuned for updates as we continuously improve our platform through regular updates and enhancements.
           
           </p>
@@ -176,7 +176,7 @@ const InfoPage: React.FC = () => {
               </div>
      
               <div className="text-gray-200">
-                "blah blah blah"
+                blah blah blah
               </div>
             </div>
 
@@ -205,7 +205,7 @@ const InfoPage: React.FC = () => {
               </div>
      
               <div className="text-gray-200">
-                "blah blah blah"
+                blah blah blah
      
               </div>
      
@@ -237,7 +237,7 @@ const InfoPage: React.FC = () => {
      
               <div className="text-gray-200">
      
-                "blah blah blah"
+                blah blah blah
 
               </div>
             </div>
@@ -268,7 +268,7 @@ const InfoPage: React.FC = () => {
               </div>
               <div className="text-gray-200">
      
-                "blah blah blah"
+                blah blah blah
               </div>
      
             </div>
@@ -284,7 +284,7 @@ const InfoPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-blue-900 mb-4">Contact Us Here</h2>
-            <p className="text-lg text-gray-600 mb-8">We'd love to hear from you! Please fill out the form below!</p>
+            <p className="text-lg text-gray-600 mb-8">We&apos;d love to hear from you! Please fill out the form below!</p>
           </div>
           <div className="flex justify-center">
             <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-lg">
