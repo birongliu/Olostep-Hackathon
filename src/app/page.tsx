@@ -73,51 +73,56 @@ const Page: React.FC = () => {
           Scrapetastic
         </div>
 
-       {/* Buttons */}
-       <div className="flex justify-center items-center">
+
+        {/* Buttons */}
+        <div className="flex justify-center items-center">
           <div className="px-4 py-3 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition">
-            <button
+          <button
               onClick={handleScraping}
               className="w-full h-full"
             >
-              Start Scraping
-            </button>
+                Start Scraping
+                </button>
           </div>
         </div>
-      
+
       </section>
       
         </div>
-    </div>
-
-    
+      </div>
 
       {/* Description Section */}
-      <section className="relative flex flex-col items-center w-full py-40 bg-white">
-        <h2 className="text-5xl font-bold mb-8 text-blue-900 py-10">What is Scrapetastic?</h2>
-        <p className="text-center max-w-3xl text-xl leading-relaxed text-gray-800">
-        
-        Scrapetastic is your go-to tool for transforming any webpage into valuable data with ease. Simply provide a URL, and our platform will effortlessly scrape the content, 
-        store it, and display it for you to explore. Whether you're a developer, researcher, or just curious, Scrapetastic makes web scraping simple and accessible.
-        Stay tuned for updates as we continuously improve our platform through regular updates and enhancements.
-        
-        </p>
+      <section className="relative flex flex-col items-center w-full py-16 md:py-24 lg:py-32 bg-white">
+      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 text-center text-blue-900">
+             
+             What is Scrapetastic?
+         
+          </h2>
+
+          <p className="text-center max-w-full md:max-w-2xl lg:max-w-3xl text-lg md:text-xl leading-relaxed text-gray-800 px-4">
+              
+              Scrapetastic is your go-to tool for transforming any webpage into valuable data with ease. Simply provide a URL, and our platform will effortlessly scrape the content, 
+              store it, and display it for you to explore. Whether you're a developer, researcher, or just curious, Scrapetastic makes web scraping simple and accessible.
+              Stay tuned for updates as we continuously improve our platform through regular updates and enhancements.
+          
+          </p>
       </section>
+
 
 
 
 
       {/* Creator Section */}
-      <section id="creators" className="py-16 bg-gradient-to-r from-purple-800 via-blue-800 to-purple-800 text-white">
+      <section id="creators" className="py-32 bg-gradient-to-r from-purple-800 via-blue-800 to-purple-800 text-white">
      
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-6">
      
           <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Who are we?</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
      
      
             {/* Creator 1 */}
-            <div className="flex flex-col items-center text-center mb-12">
+            <div className="flex flex-col items-center text-center mb-12 ">
      
               <div className="mb-8">
                 <img className="inline-block rounded-md" loading="lazy" src="/img/background.png" alt="Creator 1" />
