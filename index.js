@@ -14,7 +14,7 @@ app.use(express.json({ extended: false }));
 app.use(cors({ origin: process.env.FRONTEND }))
 
 app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/scraper', authMiddleware require('./routes/scrapRoutes'));
+app.use('/api/scraper', /*authMiddleware,*/ require('./routes/scrapRoutes'));
 
 const PORT = process.env.PORT || 5000;
 
