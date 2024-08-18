@@ -32,11 +32,11 @@ exports.scrap = async (req, res) => {
 
     const { allowed, disallowed } = classifyEndpoints(links, robots);
 
-    console.log('Allowed Endpoints:');
-    allowed.forEach((link) => console.log(link));
+    // console.log('Allowed Endpoints:');
+    // allowed.forEach((link) => console.log(link));
 
-    console.log('\nDisallowed Endpoints:');
-    disallowed.forEach((link) => console.log(link));
+    // console.log('\nDisallowed Endpoints:');
+    // disallowed.forEach((link) => console.log(link));
 
     res.json({
       allowedEndpoints: allowed,
