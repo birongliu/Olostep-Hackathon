@@ -52,7 +52,6 @@ export default function UrlPages() {
   };
 
   const handleSearch = async () => {
-    setActiveApi("deep_scrap");
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/scraper/deep_scrap`,
