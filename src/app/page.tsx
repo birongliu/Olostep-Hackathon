@@ -26,7 +26,7 @@ const Page: React.FC = () => {
       <div className="relative flex flex-col justify-center items-center w-full z-10 px-4 md:px-8 lg:px-16">
         
           {/* "Welcome to" with dot SVG */}
-          <div className="relative uppercase tracking-widest text-md bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold mb-4 shadow-lg flex items-center">
+          <div className="relative uppercase tracking-widest text-md bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold mb-4 flex items-center">
           
           {/* Dot SVG */}
 
@@ -65,13 +65,13 @@ const Page: React.FC = () => {
         </div>
         
         {/* "SScrapetastic" */}
-        <div className="text-[3rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem] bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold uppercase mb-4 shadow-lg px-4 md:px-6 lg:px-8 text-center">
+        <div className="text-[3rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem] bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent font-bold uppercase mb-4 px-4 md:px-6 lg:px-8 text-center">
           Scrapetastic
         </div>
 
 
         {/* " Description" */}
-        <p className="relative uppercase tracking-widest text-sm md:text-base lg:text-lg xl:text-xl bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent font-bold mb-6 md:mb-8 lg:mb-10 shadow-lg text-center">
+        <p className="relative uppercase tracking-widest text-sm md:text-base lg:text-lg xl:text-xl bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-500 bg-clip-text text-transparent font-bold mb-6 md:mb-8 lg:mb-10 text-center">
           
           {isClient && (
             <div className="flex space-x-2 md:space-x-3 lg:space-x-4 justify-center mb-4">
