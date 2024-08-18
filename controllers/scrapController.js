@@ -9,7 +9,7 @@ const {
 const puppeteer = require('puppeteer-extra');
 const proxyPlugin = require('puppeteer-extra-plugin-proxy');
 const ScrapedData = require('../models/scrapModel');
-puppeteer.use(proxyPlugin)
+puppeteer.use(proxyPlugin);
 
 exports.scrap = async (req, res) => {
   const { url } = req.body;
@@ -45,11 +45,13 @@ exports.scrap = async (req, res) => {
       data: {
         allowedEndpoints: allowed,
         disallowedEndpoints: disallowed,
-      }
+      },
     });
   } catch (error) {
     console.error('Error during scraping:', error.message);
-    res.status(500).json({ status: 500, data: 'An error occurred during scraping' });
+    res
+      .status(500)
+      .json({ status: 500, data: 'An error occurred during scraping' });
   }
 };
 
@@ -119,11 +121,11 @@ exports.deep_scrap = async (req, res) => {
     if (data) {
       // Filter out links without a valid href
       const filteredLinks = data.links
-        .map(link => ({
+        .map((link) => ({
           text: link.text,
           href: link.href,
         }))
-        .filter(link => link.href); // Keep only links with a valid href
+        .filter((link) => link.href); // Keep only links with a valid href
 
       // Check if a record with the same URL already exists
       let scrapedData = await ScrapedData.findOne({ url });
@@ -134,7 +136,8 @@ exports.deep_scrap = async (req, res) => {
         scrapedData.headings = data.headings;
         scrapedData.links = filteredLinks;
         scrapedData.paragraphs = data.paragraphs;
-        scrapedData.analysisSummary = analysis.choices[0]?.message?.content || '';
+        scrapedData.analysisSummary =
+          analysis.choices[0]?.message?.content || '';
 
         await scrapedData.save(); // Save the updated record
         console.log('Updated existing record for URL:', url);
@@ -158,7 +161,7 @@ exports.deep_scrap = async (req, res) => {
         data: {
           context: data,
           analysis,
-        }
+        },
       });
     } else {
       res.status(500).json({ error: 'Failed to scrape the URL' });
@@ -172,4 +175,3 @@ exports.deep_scrap = async (req, res) => {
     }
   }
 };
-
