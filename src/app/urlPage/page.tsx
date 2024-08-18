@@ -162,7 +162,7 @@ export default function UrlPages() {
              </>
           )}
         </div>
-      </div>s
+      </div>
     </main>
   );
 }
