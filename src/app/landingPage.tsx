@@ -11,7 +11,7 @@ const creators = [
     name: 'Pranitha Ramaswamy',
     role: 'UI/UX Designer',
     imageSrc: '/img/creator2.jpg',
-    description: 'blah blah blah',
+    // description: 'blah blah blah',
     socialLinks: {
       Github: 'https://github.com/pranitha05',
       instagram: 'https://www.instagram.com/pranitha',
@@ -23,7 +23,7 @@ const creators = [
     name: 'Minh Le',
     role: 'Front-End Developer',
     imageSrc: '/img/creator1.png',
-    description: 'blah blah blah',
+    // description: 'blah blah blah',
     socialLinks: {
       Github: 'https://www.github.com/minh',
       instagram: 'https://www.instagram.com/minh',
@@ -35,7 +35,7 @@ const creators = [
     name: 'Asmaa HADAR',
     role: 'Project manager & Back-End Developer',
     imageSrc: '/img/creator3.png',
-    description: 'blah blah blah',
+    // description: 'blah blah blah',
     socialLinks: {
       Github: 'https://github.com/H-Asmaa',
       instagram: 'https://www.instagram.com/asmaahadar2',
@@ -47,7 +47,7 @@ const creators = [
     name: 'Bi Rong Liu',
     role: 'Automation & DevOps Engineer',
     imageSrc: '/img/creator4.jpg',
-    description: 'blah blah blah',
+    // description: 'blah blah blah',
     socialLinks: {
       Github: 'https://github.com/birongliu',
       instagram: 'https://www.instagram.com/birong',
