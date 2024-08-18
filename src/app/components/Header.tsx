@@ -1,10 +1,22 @@
+"use client";
+
 import { SignedOut, SignInButton, SignedIn, UserButton } from '@clerk/nextjs';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
+
+  const router = useRouter(); 
+
+  const handleLogoClick = () => {
+    router.push('/'); 
+  };
+  
   return (
     <header className="fixed top-0 left-0 right-0 p-4 bg-transparent text-white flex justify-between items-center z-50">
-      <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent">
+      
+      <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 bg-clip-text text-transparent cursor-pointer"
+       onClick={handleLogoClick}>
 
       Myscraper
       </h1>

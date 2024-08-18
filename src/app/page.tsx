@@ -13,7 +13,7 @@ const Page: React.FC = () => {
   }, []);
 
   const handleScraping = () => {
-    router.push('/urlPage'); // Navigate to /urlPage
+    router.push('/urlPage'); 
   };
   
 
