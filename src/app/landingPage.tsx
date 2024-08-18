@@ -7,7 +7,13 @@ const InfoPage: React.FC = () => {
   const [formState, setFormState] = useState({
     name: '',
     email: '',
+    phone: '',
     message: '',
+  });
+
+  const [messageState, setMessageState] = useState({
+    success: false,
+    error: false,
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -18,11 +24,33 @@ const InfoPage: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission logic here
-    alert('Form submitted!');
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        setMessageState({ success: true, error: false });
+        form.reset();
+        setTimeout(() => setMessageState({ success: false, error: false }), 10000);
+      } else {
+        setMessageState({ success: false, error: true });
+        setTimeout(() => setMessageState({ success: false, error: false }), 10000);
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setMessageState({ success: false, error: true });
+      setTimeout(() => setMessageState({ success: false, error: false }), 10000);
+    }
   };
+
+
 
   return (
     <div className="relative w-full min-h-screen bg-gray-900 text-white">
@@ -119,20 +147,20 @@ const InfoPage: React.FC = () => {
      
         <div className="container mx-auto px-6">
      
-          <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">Who are we?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">Who are we?</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
      
      
             {/* Creator 1 */}
-            <div className="flex flex-col items-center text-center mb-12 ">
+            <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
      
-              <div className="mb-8">
-                <img className="inline-block rounded-md" loading="lazy" src="/img/background.png" alt="Creator 1" />
+              <div className="mb-6">
+                <img className="w-64 h-64 object-cover rounded-md" loading="lazy" src="/img/creator2.jpg" alt="Creator 1" />
               </div>
      
               <div className="mb-4">
      
-                <strong className="text-2xl md:text-3xl block mb-2">Pranitha Ramaswamy</strong>
+                <strong className="text-1xl md:text-2xl block mb-2">Pranitha Ramaswamy</strong>
                 <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">UI/UX Designer</span>
                 <span className="inline-block w-16 h-1 bg-gray-700"></span>
      
@@ -144,16 +172,16 @@ const InfoPage: React.FC = () => {
             </div>
 
             {/* Creator 2 */}
-            <div className="flex flex-col items-center text-center mb-12">
+           <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
      
-              <div className="mb-8">
-                <img className="inline-block rounded-md" loading="lazy" src="/img/background.png" alt="Creator 2" />
+              <div className="mb-6">
+                <img className="w-64 h-64 object-cover rounded-md" loading="lazy" src="/img/creator1.png" alt="Creator 2" />
               </div>
      
               <div className="mb-4">
      
      
-                <strong className="text-2xl md:text-3xl block mb-2">Minh Le</strong>
+                <strong className="text-1xl md:text-2xl block mb-2">Minh Le</strong>
                 <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">Front-End Developer</span>
                 <span className="inline-block w-16 h-1 bg-gray-700"></span>
      
@@ -167,16 +195,16 @@ const InfoPage: React.FC = () => {
             </div>
 
             {/* Creator 3 */}
-            <div className="flex flex-col items-center text-center mb-12">
+            <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
      
-              <div className="mb-8">
+              <div className="mb-6">
      
-                <img className="inline-block rounded-md" loading="lazy" src="/img/background.png" alt="Creator 3" />
+                <img className="w-64 h-64 object-cover rounded-md" loading="lazy" src="/img/background.png" alt="Creator 3" />
               </div>
      
               <div className="mb-4">
      
-                <strong className="text-2xl md:text-3xl block mb-2">Bi Rong Liu</strong>
+                <strong className="text-1xl md:text-2xl block mb-2">Bi Rong Liu</strong>
                 <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">Back-End Developer</span>
                 <span className="inline-block w-16 h-1 bg-gray-700"></span>
      
@@ -190,17 +218,17 @@ const InfoPage: React.FC = () => {
             </div>
 
             {/* Creator 4 */}
-            <div className="flex flex-col items-center text-center mb-12">
+           <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
      
-              <div className="mb-8">
+              <div className="mb-6">
      
-                <img className="inline-block rounded-md" loading="lazy" src="/img/background.png" alt="Creator 4" />
+                <img className="w-64 h-64 object-cover rounded-md" loading="lazy" src="/img/background.png" alt="Creator 4" />
      
               </div>
      
               <div className="mb-4">
      
-                <strong className="text-2xl md:text-3xl block mb-2">Asmaa Hadar</strong>
+                <strong className="text-1xl md:text-2xl block mb-2">Asmaa Hadar</strong>
                 <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">Full-Stack Developer</span>
                 <span className="inline-block w-16 h-1 bg-gray-700"></span>
      
@@ -218,9 +246,62 @@ const InfoPage: React.FC = () => {
      
       </section>
 
+    {/* Contact Section */}
+    <section className="py-16 bg-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-blue-900 mb-4">Contact Us Here</h2>
+            <p className="text-lg text-gray-600 mb-8">We'd love to hear from you! Please fill out the form below!</p>
+          </div>
+          <div className="flex justify-center">
+            <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-lg">
+              <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" onSubmit={handleSubmit}>
+                <input type="hidden" name="access_key" value="42148c10-5248-4af3-b87c-daab30e407b3" />
 
+                {messageState.success && (
+                  <div className="text-center mb-3 text-green-600">
+                    <div className="font-bold">Form submission successful!</div>
+                    Thank you for reaching out. We will get back to you soon!
+                  </div>
+                )}
 
+                {messageState.error && (
+                  <div className="text-center text-red-600 mb-3">
+                    Error sending message!
+                  </div>
+                )}
 
+                <div className="mb-6">
+                  <label htmlFor="name" className="block text-lg font-medium mb-2">Full Name</label>
+                  <input className="w-full p-3 text-gray-900 bg-gray-100 border border-gray-300 rounded-md" id="name" type="text" name="name" placeholder="Enter your full name" value={formState.name} onChange={handleChange} required />
+                </div>
+
+                <div className="mb-6">
+                  <label htmlFor="email" className="block text-lg font-medium mb-2">Email Address</label>
+                  <input className="w-full p-3 text-gray-900 bg-gray-100 border border-gray-300 rounded-md" id="email" type="email" name="email" placeholder="name@example.com" value={formState.email} onChange={handleChange} required />
+                </div>
+
+                <div className="mb-6">
+                  <label htmlFor="phone" className="block text-lg font-medium mb-2">Phone Number</label>
+                  <input className="w-full p-3 text-gray-900 bg-gray-100  border border-gray-300 rounded-md" id="phone" type="tel" name="phone" placeholder="(123) 456-7890" value={formState.phone} onChange={handleChange} />
+                </div>
+
+                <div className="mb-6">
+                  <label htmlFor="message" className="block text-lg font-medium mb-2">Message</label>
+                  <textarea className="w-full p-3 text-gray-900 bg-gray-100 border border-black-300 rounded-md" id="message" name="message" placeholder="Enter your message here..." style={{ height: '10rem' }} 
+                  value={formState.message} onChange={handleChange} required></textarea>
+                </div>
+
+                <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} />
+
+                <div className="text-center">
+                  <button className="mr-4 px-8 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition" type="submit">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
