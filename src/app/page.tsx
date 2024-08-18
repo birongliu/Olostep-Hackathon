@@ -189,8 +189,7 @@ const Page: React.FC = () => {
               </div>
 
               <div className="text-gray-200">
-     
-                "blah blah blah"
+                &quot;blah blah blah&quot;
               </div>
 
             </div>
@@ -219,8 +218,8 @@ const Page: React.FC = () => {
               </div>
 
               <div className="text-gray-200">
-     
-                "blah blah blah"
+    
+                blah blah blah
               </div>
             </div>
             {/* Creator 3 */}
@@ -248,7 +247,7 @@ const Page: React.FC = () => {
 
               <div className="text-gray-200">
      
-                "blah blah blah"
+                blah blah blah
               </div>
             </div>
             {/* Creator 4 */}
@@ -276,8 +275,8 @@ const Page: React.FC = () => {
               </div>
 
               <div className="text-gray-200">
-     
-                "blah blah blah"
+    
+                blah blah blah
               </div>
             </div>
           </div>
@@ -292,7 +291,7 @@ const Page: React.FC = () => {
           <div className="text-center mb-12">
 
             <h2 className="text-4xl font-bold text-blue-900 mb-4">Contact Us Here</h2>
-            <p className="text-lg text-gray-600 mb-8">We'd love to hear from you! Please fill out the form below!</p>
+            <p className="text-lg text-gray-600 mb-8">We&apos;d love to hear from you! Please fill out the form below!</p>
 
           </div>
           <div className="flex justify-center">
