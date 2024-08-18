@@ -24,6 +24,7 @@ export default function UrlPages() {
     disallowedEndpoints: string[];
   } | null>(null);
   const [data, setData] = useState<DeepScrap>();
+  const [wait, setWait] = useState(false)
   const [activeApi, setActiveApi] = useState<"scrap" | "deep_scrap" | null>(
     null
   );
@@ -31,6 +32,7 @@ export default function UrlPages() {
   //api request
   const handleScraping = async () => {
     setActiveApi("scrap");
+    setWait(true)
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/scraper/scrap`,
@@ -44,9 +46,9 @@ export default function UrlPages() {
       );
       const responseData = await response.json();
 
-
       if (responseData.status === 200) {
         setScrapedData(responseData.data);
+        setWait(false)
       }
     } catch (error) {
       console.error("Error during scraping:", error);
@@ -75,11 +77,11 @@ export default function UrlPages() {
   };
 
   return (
-    <main className="relative flex w-full h-screen bg-[url('/img/background.png')] bg-cover bg-center">
+    <main className={`relative flex w-full ${data ? "h-full" : "h-screen"} bg-[url('/img/background.png')] bg-cover bg-center`}>
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-15"></div>
 
-      <div className="relative flex flex-col justify-center items-center w-full z-10 px-4 md:px-8 lg:px-16">
+      <div className="relative flex mt-32 flex-col justify-center items-center w-full z-10 px-4 md:px-8 lg:px-16">
         {/* "Ready to start" */}
         <div className="text-[2rem] md:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] bg-gradient-to-r from-purple-700 via-red-600 to-pink-500 bg-clip-text text-transparent font-bold uppercase mb-4 px-4 md:px-6 lg:px-8 text-center">
           Ready to start scrapping?
@@ -134,10 +136,20 @@ export default function UrlPages() {
         </div>
 
         {/* Display Scraped Results */}
-        <div className="grid grid-cols-1 md:grid-cols-2 h-screen overflow-auto gap-10 rounded">
+        <div className={`flex flex-col w-full p-5 rounded  ${scrapedData ? "block" : "hidden"} bg-black text-white grid-cols-1 overflow-y-auto scroll-smooth md:grid-cols-4 h-40`}>
+        {scrapedData !== null && scrapedData.allowedEndpoints.map((element, i) => (
+            <ul className="flex flex-col" key={i}>
+              <button onClick={() => setSearchTerm(element)}>
+              <li className="text-white">{element}</li>
+              </button>
+            </ul>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 rounded">
+          {wait && <div>Please wait</div>}
           {data && (
             <>
-              <div className="flex rounded overflow-scroll flex-col text-black">
+              <div className="flex rounded overflow-scroll h-64 flex-col text-black">
                 <div> Analysis </div>
                 <p className="bg-white overflow-auto p-2">
                   {data?.analysis.choices[0].message.content}
@@ -147,9 +159,9 @@ export default function UrlPages() {
           )}
           {data && (
                <>
-               <div className="flex rounded overflow-scroll flex-col text-black p-5 w-full">
-                 <div> Raw Data </div>
-                 <p className="bg-white overflow-auto p-2">
+              <div className="flex rounded overflow-scroll h-64 flex-col text-black">
+              <div> Raw Data </div>
+                 <p className="bg-white overflow-auto w-full p-2">
                    {data?.context.title}
                    {data?.context.paragraphs.map(k => (
                     <p key={k}>{k}</p>
