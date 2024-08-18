@@ -1,6 +1,8 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const dotenv = require('dotenv');
+const cors = require("cors");
+const authMiddleware = require('./middleware/authMiddleware');
 
 dotenv.config();
 
@@ -9,9 +11,10 @@ const app = express();
 connectDB();
 
 app.use(express.json({ extended: false }));
+app.use(cors({ origin: process.env.FRONTEND }))
 
 app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/scraper', require('./routes/scrapRoutes'));
+app.use('/api/scraper', authMiddleware require('./routes/scrapRoutes'));
 
 const PORT = process.env.PORT || 5000;
 
@@ -24,5 +27,5 @@ app.get('/', (req, res) => {
 });
 
 app.use((req, res) => {
-  res.status(404).json({ status: 404, message: 'No resource found' });
+  res.status(404).json({ status: 404, data: 'No resource found' });
 });

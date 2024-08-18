@@ -9,13 +9,13 @@ exports.register = async (req, res) => {
   const validationResult = signupSchema.safeParse({ username, email, password });
 
   if (!validationResult.success) {
-    return res.status(400).json({ errors: validationResult.error.errors });
+    return res.status(400).json({ status: 400, data: validationResult.error.errors });
   }
 
   try {
     let user = await User.findOne({ email });
     if (user) {
-      return res.status(400).json({ msg: 'User already exists' });
+      return res.status(400).json({ status: 400, data: 'User already exists' });
     }
 
     user = new User({
@@ -43,7 +43,7 @@ exports.register = async (req, res) => {
     );
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ status: 500, data: 'Server error'});
   }
 };
 
@@ -53,18 +53,18 @@ exports.login = async (req, res) => {
   const validationResult = loginSchema.safeParse({ email, password });
 
   if (!validationResult.success) {
-    return res.status(400).json({ errors: validationResult.error.errors });
+    return res.status(400).json({ status: 400, data: validationResult.error.errors });
   }
 
   try {
     let user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ msg: 'Invalid credentials' });
+      return res.status(400).json({ status:400, data: 'Invalid credentials' });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ msg: 'Invalid credentials' });
+      return res.status(400).json({ status: 400, data: 'Invalid credentials' });
     }
 
     const payload = {
@@ -84,6 +84,6 @@ exports.login = async (req, res) => {
     );
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).send({ status: 500, data: "Internal Error"});
   }
 };

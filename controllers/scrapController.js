@@ -8,12 +8,13 @@ const {
 
 const puppeteer = require('puppeteer-extra');
 const proxyPlugin = require('puppeteer-extra-plugin-proxy');
+puppeteer.use(proxyPlugin)
 
 exports.scrap = async (req, res) => {
   const { url } = req.body;
 
   if (!url) {
-    return res.status(400).json({ error: 'URL is required' });
+    return res.status(400).json({ status: 400, data: 'URL is required' });
   }
 
   try {
@@ -27,7 +28,7 @@ exports.scrap = async (req, res) => {
       console.log('No endpoints found on the website.');
       return res
         .status(404)
-        .json({ message: 'No endpoints found on the website' });
+        .json({ status: 404, data: 'No endpoints found on the website' });
     }
 
     const { allowed, disallowed } = classifyEndpoints(links, robots);
@@ -39,12 +40,15 @@ exports.scrap = async (req, res) => {
     // disallowed.forEach((link) => console.log(link));
 
     res.json({
-      allowedEndpoints: allowed,
-      disallowedEndpoints: disallowed,
+      status: 200,
+      data: {
+        allowedEndpoints: allowed,
+        disallowedEndpoints: disallowed,
+      }
     });
   } catch (error) {
     console.error('Error during scraping:', error.message);
-    res.status(500).json({ error: 'An error occurred during scraping' });
+    res.status(500).json({ status: 500, data: 'An error occurred during scraping' });
   }
 };
 
@@ -52,7 +56,7 @@ exports.deep_scrap = async (req, res) => {
   const { url } = req.body;
 
   if (!url) {
-    return res.status(400).json({ error: 'URL is required' });
+    return res.status(400).json({ status: 400, data: 'URL is required' });
   }
   let browser;
   try {
@@ -72,13 +76,15 @@ exports.deep_scrap = async (req, res) => {
     const data = await extractAndSaveData(page);
     const analysis = await analyzeData(data);
     if (data) {
-      res.json({
-        data,
-        analysis,
+      return res.status(200).json({
+        status: 200,
+        data: {
+          context: data,
+          analysis,
+        }
       });
-      // res.status(200).json({ message: 'Data has been extracted and saved.' });
     } else {
-      res.status(500).json({ error: 'Failed to scrape the URL' });
+      res.status(500).json({ status: 500, data: 'Failed to scrape the URL' });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
