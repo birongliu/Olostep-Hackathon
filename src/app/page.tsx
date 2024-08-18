@@ -41,7 +41,16 @@ const Page: React.FC = () => {
 
       if (response.ok) {
         setMessageState({ success: true, error: false });
-        form.reset();
+        form.reset(); // Resetting the form fields
+
+        // Resetting the state
+        setFormState({
+          name: '',
+          email: '',
+          phone: '',
+          message: '',
+        });
+
         setTimeout(() => setMessageState({ success: false, error: false }), 10000);
       } else {
         setMessageState({ success: false, error: true });
@@ -53,6 +62,7 @@ const Page: React.FC = () => {
       setTimeout(() => setMessageState({ success: false, error: false }), 10000);
     }
   };
+
 
   useEffect(() => {
     setIsClient(true);
