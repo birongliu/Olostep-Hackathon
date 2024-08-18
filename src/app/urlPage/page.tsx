@@ -56,7 +56,7 @@ export default function UrlPages() {
               onClick={handleScraping}
                className="w-full px-4 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition"
             >
-              Start Scraping
+              Find sub url
             </button>
             
           </form>
@@ -76,7 +76,7 @@ export default function UrlPages() {
               onClick={handleSearch}
               className="w-full px-4 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition"
             >
-              Search
+               Start Scraping
             </button>
           </form>
         </div>
