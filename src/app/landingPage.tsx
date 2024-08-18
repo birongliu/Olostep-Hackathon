@@ -91,7 +91,16 @@ const InfoPage: React.FC = () => {
 
       if (response.ok) {
         setMessageState({ success: true, error: false });
-        form.reset();
+        form.reset(); // Resetting the form fields
+
+        // Resetting the state
+        setFormState({
+          name: '',
+          email: '',
+          phone: '',
+          message: '',
+        });
+
         setTimeout(() => setMessageState({ success: false, error: false }), 10000);
       } else {
         setMessageState({ success: false, error: true });
@@ -189,7 +198,7 @@ const InfoPage: React.FC = () => {
       <section id="creators" className="py-32 bg-gradient-to-r from-purple-800 via-blue-800 to-purple-800 text-white">
         <div className="container mx-auto px-6">
           <h2 className="text-4xl text-center font-bold mb-16">Meet the Creators</h2>
-          <div className="flex flex-wrap justify-center">
+         
             <div className="flex flex-wrap justify-center">
               {creators.map((creator, index) => (
                 <div key={index} className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-4 mb-8">
@@ -230,7 +239,7 @@ const InfoPage: React.FC = () => {
                 </div>
               ))}
             </div>
-          </div>
+          
         </div>
       </section>
 
