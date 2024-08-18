@@ -49,4 +49,4 @@ Explore the tool and its capabilities at: [Olostep Hackathon](https://olostep-ha
   <!-- GitHub Actions -->
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="40" height="40"/>
 </p>
-![image](https://github.com/user-attachments/assets/4be5a150-9a32-43c0-8ee2-16b0caf17f4e)
+
