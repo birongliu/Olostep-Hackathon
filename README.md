@@ -6,7 +6,7 @@ Features:
 - Web Scraping: Extracts data from specified URLs using Puppeteer.
 - AI Analysis: Analyzes the scraped data with the OpenAI GPT-3.5-turbo model.
 - Automation: Utilizes GitHub Actions for automated backend scraping and analysis tasks.
-- Frontend: User-friendly interface built with React and TypeScript.
+- Frontend: User-friendly interface built with Nextjs.
 - Backend: Robust server-side operations handled by Node.js and Express.
 - Database: Efficient data storage and retrieval using MongoDB.
 
