@@ -8,7 +8,6 @@ const {
 const puppeteer = require('puppeteer-extra');
 const proxyPlugin = require('puppeteer-extra-plugin-proxy');
 
-
 exports.scrap = async (req, res) => {
   const { url } = req.body;
 
@@ -70,9 +69,12 @@ exports.deep_scrap = async (req, res) => {
       waitUntil: 'domcontentloaded',
     });
 
-    const extr = await extractAndSaveData(page);
-    if (!extr) {
-      res.status(200).json({ message: 'Data has been extracted and saved.' });
+    const data = await extractAndSaveData(page);
+    if (data) {
+      res.json({
+        data,
+      });
+      // res.status(200).json({ message: 'Data has been extracted and saved.' });
     } else {
       res.status(500).json({ error: 'Failed to scrape the URL' });
     }
