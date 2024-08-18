@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { SignInButton } from '@clerk/nextjs';
+import Image from 'next/image';
 
 const InfoPage: React.FC = () => {
   const [formState, setFormState] = useState({
@@ -155,7 +156,15 @@ const InfoPage: React.FC = () => {
             <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
      
               <div className="mb-6">
-                <img className="w-64 h-64 object-cover rounded-md" loading="lazy" src="/img/creator2.jpg" alt="Creator 1" />
+              <Image
+                className="w-64 h-64 object-cover rounded-md"
+                src="/img/creator2.jpg" 
+                alt="Creator 1"
+                width={256}  
+                height={256} 
+                loading="lazy"
+                style={{ borderRadius: '0.375rem' }} // This is equivalent to `rounded-md`
+              />
               </div>
      
               <div className="mb-4">
@@ -175,7 +184,15 @@ const InfoPage: React.FC = () => {
            <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
      
               <div className="mb-6">
-                <img className="w-64 h-64 object-cover rounded-md" loading="lazy" src="/img/creator1.png" alt="Creator 2" />
+              <Image
+                className="w-64 h-64 object-cover rounded-md"
+                src="/img/creator1.png" 
+                alt="Creator 2"
+                width={256}  
+                height={256} 
+                loading="lazy"
+                style={{ borderRadius: '0.375rem' }} // This is equivalent to `rounded-md`
+              />
               </div>
      
               <div className="mb-4">
@@ -199,7 +216,15 @@ const InfoPage: React.FC = () => {
      
               <div className="mb-6">
      
-                <img className="w-64 h-64 object-cover rounded-md" loading="lazy" src="/img/background.png" alt="Creator 3" />
+              <Image
+                className="w-64 h-64 object-cover rounded-md"
+                src="/img/creator3.jpg" 
+                alt="Creator 3"
+                width={256}  
+                height={256} 
+                loading="lazy"
+                style={{ borderRadius: '0.375rem' }} // This is equivalent to `rounded-md`
+              />
               </div>
      
               <div className="mb-4">
@@ -222,7 +247,15 @@ const InfoPage: React.FC = () => {
      
               <div className="mb-6">
      
-                <img className="w-64 h-64 object-cover rounded-md" loading="lazy" src="/img/background.png" alt="Creator 4" />
+              <Image
+                className="w-64 h-64 object-cover rounded-md"
+                src="/img/creator4.jpg" 
+                alt="Creator 4"
+                width={256}  
+                height={256} 
+                loading="lazy"
+                style={{ borderRadius: '0.375rem' }} // This is equivalent to `rounded-md`
+              />
      
               </div>
      
