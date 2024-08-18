@@ -1,6 +1,8 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const robotsParser = require('robots-parser');
+const fs = require('fs');
+const path = require('path');
 
 async function fetchRobotsTxt(url) {
   try {
@@ -47,51 +49,33 @@ function classifyEndpoints(links, robots) {
 
   return { allowed, disallowed };
 }
-
-async function scrapeEndpoint(url) {
+async function extractAndSaveData(page) {
   try {
-    const response = await axios.get(url);
-    const $ = cheerio.load(response.data);
+    const extractedData = await page.evaluate(() => {
+      const data = {};
+      data.title = document.querySelector('title')?.innerText || '';
+      data.headings = Array.from(
+        document.querySelectorAll('h1, h2, h3, h4, h5, h6')
+      ).map((heading) => heading.innerText);
+      data.links = Array.from(document.querySelectorAll('a'))
+        .map((link) => ({
+          text: link.innerText.trim(),
+          href: link.href,
+        }))
+        .filter((link) => link.text);
+      data.paragraphs = Array.from(document.querySelectorAll('p')).map(
+        (paragraph) => paragraph.innerText
+      );
+      return data;
+    });
 
-    const title = $('title').text();
-    const description = $('meta[name="description"]').attr('content');
-    const h1 = $('h1')
-      .map((i, el) => $(el).text())
-      .get();
-    const links = $('a')
-      .map((i, el) => ({
-        href: $(el).attr('href'),
-        text: $(el).text(),
-      }))
-      .get();
-    const paragraphs = $('p')
-      .map((i, el) => $(el).text())
-      .get();
-    const images = $('img')
-      .map((i, el) => ({
-        src: $(el).attr('src'),
-        alt: $(el).attr('alt'),
-      }))
-      .get();
-    const forms = $('form')
-      .map((i, el) => ({
-        action: $(el).attr('action'),
-        method: $(el).attr('method'),
-      }))
-      .get();
-
-    return {
-      title,
-      description,
-      h1,
-      links,
-      paragraphs,
-      images,
-      forms,
-    };
-  } catch (error) {
-    console.error('Error scraping the endpoint:', error.message);
-    return null;
+    const filePath = path.join(__dirname, 'scraped_data.json');
+    fs.writeFileSync(filePath, JSON.stringify(extractedData, null, 2));
+    console.log(`Data extracted and saved to ${filePath}`);
+    return 0;
+  } catch (e) {
+    console.error('Data extraction failed', e);
+    return 1;
   }
 }
 
@@ -99,5 +83,6 @@ module.exports = {
   fetchRobotsTxt,
   scrapeWebsite,
   classifyEndpoints,
-  scrapeEndpoint,
+  // scrapeEndpoint,
+  extractAndSaveData,
 };

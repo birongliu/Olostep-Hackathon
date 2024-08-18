@@ -2,8 +2,12 @@ const {
   fetchRobotsTxt,
   scrapeWebsite,
   classifyEndpoints,
-  scrapeEndpoint,
+  extractAndSaveData,
 } = require('../middleware/scrapMiddleware');
+
+const puppeteer = require('puppeteer-extra');
+const proxyPlugin = require('puppeteer-extra-plugin-proxy');
+
 
 exports.scrap = async (req, res) => {
   const { url } = req.body;
@@ -51,16 +55,29 @@ exports.deep_scrap = async (req, res) => {
   if (!url) {
     return res.status(400).json({ error: 'URL is required' });
   }
-
+  let browser;
   try {
-    const data = await scrapeEndpoint(url);
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--ignore-certificate-errors'],
+      ignoreHTTPSErrors: true,
+    });
 
-    if (data) {
-      res.status(200).json(data);
+    const page = await browser.newPage();
+    page.setDefaultNavigationTimeout(3 * 60 * 1000);
+
+    await page.goto(url, {
+      waitUntil: 'domcontentloaded',
+    });
+
+    const extr = await extractAndSaveData(page);
+    if (!extr) {
+      res.status(200).json({ message: 'Data has been extracted and saved.' });
     } else {
       res.status(500).json({ error: 'Failed to scrape the URL' });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
+    console.log(error);
   }
 };
