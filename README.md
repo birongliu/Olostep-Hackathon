@@ -45,8 +45,7 @@ Explore the tool and its capabilities at: [Olostep Hackathon](https://olostep-ha
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" width="40" height="40"/>
   <!-- Puppeteer -->
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/puppeteer/puppeteer-original.svg" width="40" height="40"/>
-  <!-- OpenAI -->
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/openai/openai-original.svg" width="40" height="40"/>
+
   <!-- GitHub Actions -->
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="40" height="40"/>
 </p>
