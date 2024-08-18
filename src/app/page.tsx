@@ -187,6 +187,12 @@ const Page: React.FC = () => {
               
                 <span className="inline-block w-16 h-1 bg-gray-700"></span>
               </div>
+
+              <div className="text-gray-200">
+     
+                "blah blah blah"
+              </div>
+
             </div>
             {/* Creator 2 */}
             <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
@@ -211,6 +217,11 @@ const Page: React.FC = () => {
                 <span className="inline-block w-16 h-1 bg-gray-700"></span>
               
               </div>
+
+              <div className="text-gray-200">
+     
+                "blah blah blah"
+              </div>
             </div>
             {/* Creator 3 */}
             <div className="flex flex-col items-center text-center mb-8 md:mb-10 lg:mb-12">
@@ -233,6 +244,11 @@ const Page: React.FC = () => {
                 <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">Backend Engineer</span>
                 <span className="inline-block w-16 h-1 bg-gray-700"></span>
               
+              </div>
+
+              <div className="text-gray-200">
+     
+                "blah blah blah"
               </div>
             </div>
             {/* Creator 4 */}
@@ -257,6 +273,11 @@ const Page: React.FC = () => {
                 <span className="text-xl block tracking-wide text-gray-400 text-opacity-70 mb-4">Marketing Specialist</span>
                 <span className="inline-block w-16 h-1 bg-gray-700"></span>
               
+              </div>
+
+              <div className="text-gray-200">
+     
+                "blah blah blah"
               </div>
             </div>
           </div>

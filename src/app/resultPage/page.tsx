@@ -26,7 +26,6 @@ export default function ResultPage() {
           >
             Scrap Another Link
             
-            
           </button>
         </div>
       </div>
