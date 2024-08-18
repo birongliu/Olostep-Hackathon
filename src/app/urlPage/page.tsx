@@ -28,7 +28,6 @@ export default function UrlPages() {
 
   //api request
   const handleScraping = async () => {
-    setWait(true)
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/scraper/scrap`,
