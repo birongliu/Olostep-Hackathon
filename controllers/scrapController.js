@@ -3,6 +3,7 @@ const {
   scrapeWebsite,
   classifyEndpoints,
   extractAndSaveData,
+  analyzeData,
 } = require('../middleware/scrapMiddleware');
 
 const puppeteer = require('puppeteer-extra');
@@ -37,7 +38,6 @@ exports.scrap = async (req, res) => {
     console.log('\nDisallowed Endpoints:');
     disallowed.forEach((link) => console.log(link));
 
-    // Send the results as a JSON response
     res.json({
       allowedEndpoints: allowed,
       disallowedEndpoints: disallowed,
@@ -70,9 +70,11 @@ exports.deep_scrap = async (req, res) => {
     });
 
     const data = await extractAndSaveData(page);
+    const analysis = await analyzeData(data);
     if (data) {
       res.json({
         data,
+        analysis,
       });
       // res.status(200).json({ message: 'Data has been extracted and saved.' });
     } else {

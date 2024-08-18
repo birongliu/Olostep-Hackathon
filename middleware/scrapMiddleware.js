@@ -82,16 +82,20 @@ function classifyEndpoints(links, robots) {
 // }
 
 function htmlFilter(data) {
-  const filteredHeadings = data.headings.filter(heading => heading.trim().length > 0);
-  const filteredParagraphs = data.paragraphs.filter(paragraph => paragraph.trim().length > 0);
+  const filteredHeadings = data.headings.filter(
+    (heading) => heading.trim().length > 0
+  );
+  const filteredParagraphs = data.paragraphs.filter(
+    (paragraph) => paragraph.trim().length > 0
+  );
 
-  const filteredLinks = data.links.filter(link => link.text.length > 0);
+  const filteredLinks = data.links.filter((link) => link.text.length > 0);
 
   return {
     title: data.title,
     headings: filteredHeadings,
     links: filteredLinks,
-    paragraphs: filteredParagraphs
+    paragraphs: filteredParagraphs,
   };
 }
 
@@ -106,11 +110,10 @@ async function extractAndSaveData(page) {
       data.headings = Array.from(
         document.querySelectorAll('h1, h2, h3, h4, h5, h6')
       ).map((heading) => heading.innerText);
-      data.links = Array.from(document.querySelectorAll('a'))
-        .map((link) => ({
-          text: link.innerText.trim(),
-          href: link.href,
-        }));
+      data.links = Array.from(document.querySelectorAll('a')).map((link) => ({
+        text: link.innerText.trim(),
+        href: link.href,
+      }));
       data.paragraphs = Array.from(document.querySelectorAll('p')).map(
         (paragraph) => paragraph.innerText
       );
@@ -118,7 +121,7 @@ async function extractAndSaveData(page) {
     });
 
     const filteredData = htmlFilter(extractedData);
-    return filteredData
+    return filteredData;
     // const filePath = path.join(__dirname, 'scraped_data.json');
     // fs.writeFileSync(filePath, JSON.stringify(filteredData, null, 2));
     // console.log(`Data extracted and saved to ${filePath}`);
@@ -129,10 +132,47 @@ async function extractAndSaveData(page) {
   }
 }
 
+const analyzeData = async (data) => {
+  try {
+    // Dynamically import node-fetch
+    const fetch = (await import('node-fetch')).default;
+
+    const response = await fetch(
+      'https://openrouter.ai/api/v1/chat/completions',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENROUTER_API_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'openai/gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'system',
+              content: 'Analyze the following JSON data and provide insights.',
+            },
+            {
+              role: 'user',
+              content: `Here is the JSON data: ${JSON.stringify(data)}`,
+            },
+          ],
+        }),
+      }
+    );
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
 module.exports = {
   fetchRobotsTxt,
   scrapeWebsite,
   classifyEndpoints,
   // scrapeEndpoint,
   extractAndSaveData,
+  analyzeData,
 };
