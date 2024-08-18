@@ -4,6 +4,7 @@ const {
   classifyEndpoints,
   extractAndSaveData,
   analyzeData,
+  checkUrl,
 } = require('../middleware/scrapMiddleware');
 
 const puppeteer = require('puppeteer-extra');
@@ -13,6 +14,10 @@ puppeteer.use(proxyPlugin);
 
 exports.scrap = async (req, res) => {
   const { url } = req.body;
+
+  if (!checkUrl(url)) {
+    return res.status(400).json({ status: 400, data: 'URL is not found' });
+  }
 
   if (!url) {
     return res.status(400).json({ status: 400, data: 'URL is required' });
@@ -95,6 +100,10 @@ exports.scrap = async (req, res) => {
 
 exports.deep_scrap = async (req, res) => {
   const { url } = req.body;
+
+  if (!checkUrl(url)) {
+    return res.status(400).json({ status: 400, data: 'URL is not found' });
+  }
 
   if (!url) {
     return res.status(400).json({ error: 'URL is required' });

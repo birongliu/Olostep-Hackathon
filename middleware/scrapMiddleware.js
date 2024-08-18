@@ -1,8 +1,28 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 const robotsParser = require('robots-parser');
-const fs = require('fs');
-const path = require('path');
+
+const checkUrl = async (url) => {
+  const fetch = (await import('node-fetch')).default;
+  try {
+    new URL(url);
+
+    const response = await fetch(url, { method: 'HEAD' });
+
+    if (response.ok) {
+      console.log(`The URL ${url} is valid and exists.`);
+      return true;
+    } else {
+      console.log(
+        `The URL ${url} exists but returned a status of ${response.status}.`
+      );
+      return false;
+    }
+  } catch (error) {
+    console.error(`Invalid or non-existent URL: ${url}`, error.message);
+    return false;
+  }
+};
 
 async function fetchRobotsTxt(url) {
   try {
@@ -175,4 +195,5 @@ module.exports = {
   // scrapeEndpoint,
   extractAndSaveData,
   analyzeData,
+  checkUrl,
 };
