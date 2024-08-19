@@ -10,34 +10,14 @@ const {
 const puppeteer = require("puppeteer-extra");
 const proxyPlugin = require("puppeteer-extra-plugin-proxy");
 const ScrapedData = require("../models/scrapModel");
-const puppeteerBrowsers = require("@puppeteer/browsers");
-const path = require("path");
-const { existsSync, mkdirSync } = require("fs");
 
 puppeteer.use(proxyPlugin);
-
-async function installBroswer() {
-  const chromePath = path.join(__dirname, ".cache", "puppeteer", "chrome");
-  if (!existsSync(chromePath)) {
-    mkdirSync(chromePath, { recursive: true });
-  }
-  const installedBrowsers = await puppeteerBrowsers.getInstalledBrowsers({
-    cacheDir: chromePath,
-  });
-  if (installedBrowsers.length === 1) return true;
-  
-  const broswer = await puppeteerBrowsers.install({
-    browser: puppeteerBrowsers.Browser.CHROME,
-    cacheDir: chromePath,
-  });
-  return broswer;
-}
 
 async function getBroswer(url) {
   //await installBroswer();
   let browser = await puppeteer.launch({
     headless: true,
-    args: ["--ignore-certificate-errors"],
+    args: ["--ignore-certificate-errors", '--no-sandbox'],
     ignoreHTTPSErrors: true,
   });
 
