@@ -24,7 +24,6 @@ export default function UrlPages() {
     disallowedEndpoints: string[];
   } | null>(null);
   const [data, setData] = useState<DeepScrap>();
-  const [wait, setWait] = useState(true)
 
   //api request
   const handleScraping = async () => {
@@ -41,10 +40,9 @@ export default function UrlPages() {
       );
       const responseData = await response.json();
 
-      if (responseData.status === 200) {
         setScrapedData(responseData.data);
-        setWait((prev) => !prev)
-      }
+        console.log(scrapedData)
+      
     } catch (error) {
       console.error("Error during scraping:", error);
     }
@@ -65,6 +63,7 @@ export default function UrlPages() {
 
       const ctx = await response.json();
       setData(ctx.data);
+      console.log(ctx)
     } catch (error) {
       console.error("Error during deep scraping:", error);
     }
@@ -140,7 +139,6 @@ export default function UrlPages() {
           ))}
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 rounded">
-          {wait && <div>Please wait</div>}
           {data && (
             <>
               <div className="flex rounded overflow-scroll h-64 flex-col text-black">
