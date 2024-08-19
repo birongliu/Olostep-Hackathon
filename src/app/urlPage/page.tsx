@@ -39,12 +39,13 @@ export default function UrlPages() {
         }
       );
       const responseData = await response.json();
-
+      if(responseData.status === 200) {
         setScrapedData(responseData.data);
-        console.log(scrapedData)
-      
+      }
+
     } catch (error) {
       console.error("Error during scraping:", error);
+      setScrapedData({ allowedEndpoints: [], disallowedEndpoints: []})
     }
   };
 
