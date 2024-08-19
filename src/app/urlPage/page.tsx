@@ -1,7 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import React, { useState } from "react";
-
+import { useRouter } from "next/navigation";
 interface DeepScrap {
   context: {
     title: string;
@@ -16,48 +17,62 @@ interface DeepScrap {
     }[];
   };
 }
+interface LoadingStates {
+  links: boolean;
+  scrap: boolean;
+}
 export default function UrlPages() {
   const [url, setUrl] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [scrapedData, setScrapedData] = useState<{
+  const [links, setLinks] = useState<{
     allowedEndpoints: string[];
     disallowedEndpoints: string[];
   } | null>(null);
   const [data, setData] = useState<DeepScrap | null>(null);
+  const [loading, setLoading] = useState<LoadingStates>({
+    links: false,
+    scrap: false,
+  });
+  const router = useRouter();
 
   //api request
   const handleScraping = async () => {
+    setLoading((prev) => ({ ...prev, links: true }));
     try {
       const response = await fetch("/api/scrap", {
         body: JSON.stringify({ url }),
-        method: "POST"
-      })
+        method: "POST",
+      });
       const responseData = await response.json();
-      if(responseData.status === 200) {
-        setScrapedData(responseData.data);
+      if (responseData.status === 200) {
+        setLinks(responseData.data);
       }
-
+      setLoading((prev) => ({ ...prev, links: false }));
     } catch (error) {
       console.error("Error during scraping:", error);
-      setScrapedData({ allowedEndpoints: [], disallowedEndpoints: []})
+      setLinks({ allowedEndpoints: [], disallowedEndpoints: [] });
     }
   };
 
   const handleSearch = async () => {
+    setLoading((prev) => ({ ...prev, scrap: true }));
     try {
-      const response = await fetch(`/api/scrap?url=${searchTerm}`)
+      const response = await fetch(`/api/scrap?url=${searchTerm}`);
       const responseData = await response.json();
-      console.log(responseData)
-
       setData(responseData.data);
+      setLoading((prev) => ({ ...prev, scrap: false }));
     } catch (error) {
       console.error("Error during deep scraping:", error);
-      setData(null)
+      setData(null);
     }
   };
 
   return (
-    <main className={`relative flex w-full ${data ? "h-full" : "h-screen"} bg-[url('/img/background.png')] bg-cover bg-center`}>
+    <main
+      className={`relative flex w-full ${
+        links || data ? "h-full" : "h-screen"
+      } h-full bg-[url('/img/background.png')] bg-cover bg-center`}
+    >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-15"></div>
 
@@ -85,10 +100,11 @@ export default function UrlPages() {
 
             <button
               type="button"
+              disabled={loading.links}
               onClick={handleScraping}
               className="w-full px-4 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition"
             >
-              Find sub url
+              {!loading.links ? "Find Links" : "Loading"}
             </button>
           </form>
         </div>
@@ -104,29 +120,67 @@ export default function UrlPages() {
               placeholder="Enter a sub url here..."
               className="w-full p-3 rounded-lg text-black bg-white bg-opacity-80 border-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-300 ease-in-out"
             />
-
             <button
               type="button"
+              disabled={loading.scrap}
               onClick={handleSearch}
               className="w-full px-4 py-2 bg-gradient-to-r from-purple-700 to-blue-700 text-white rounded-lg hover:from-purple-600 hover:to-blue-800 transition"
             >
-              Start Scraping
+              {!loading.scrap ? "Start Scraping" : "Loading"}
             </button>
           </form>
         </div>
 
         {/* Display Scraped Results */}
-        <div className={`flex flex-col w-full p-5 rounded  ${scrapedData ? "block" : "hidden"} bg-black text-white grid-cols-1 overflow-y-auto scroll-smooth md:grid-cols-4 h-40`}>
-        {scrapedData !== null && scrapedData.allowedEndpoints.map((element, i) => (
-            <ul className="flex flex-col" key={i}>
-              <button onClick={() => setSearchTerm(element)}>
-              <li className="text-white">{element}</li>
-              </button>
-            </ul>
-          ))}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 rounded">
-          {data && (
+        {links && (
+          <div className="scrollbar grid-cols-2 w-full gap-10 rounded-md h-64 mb-2 overflow-y-auto text-black border-black border p-4">
+            <div
+              className={` ${
+                links.allowedEndpoints.length > 0 ? "flex flex-col" : "hidden"
+              } justify-center items-center`}
+            >
+              <h1 className="text-2xl">Search Endpoint</h1>
+              <div
+                className={`flex flex-col ${
+                  links.allowedEndpoints.length > 0 ? "block" : "hidden"
+                }`}
+              >
+                {links.allowedEndpoints.map((element) => (
+                  <button onClick={() => setSearchTerm(element)} key={element}>
+                    {element}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+        {data && (
+          <div className="scrollbar grid-cols-2 w-full gap-10 rounded-md h-64 mb-2 overflow-y-auto text-black border-black border p-4">
+            <div
+              className={` ${
+                data.analysis.choices.length > 0 ? "flex flex-col" : "hidden"
+              } justify-center`}
+            >
+              <div
+                className={`flex flex-col ${
+                  data ? "block" : "hidden"
+                }`}
+              >
+                <h1 className="text-2xl font-bold">Insights</h1>
+                <div>{data.analysis.choices.map(k => (
+                  <p key={k.message.content}>{k.message.content}</p>
+                ))}</div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </main>
+  );
+}
+
+/**
+ *           {data && (
             <>
               <div className="flex rounded overflow-scroll h-64 flex-col text-black">
                 <div> Analysis </div>
@@ -149,8 +203,4 @@ export default function UrlPages() {
                </div>
              </>
           )}
-        </div>
-      </div>
-    </main>
-  );
-}
+ */

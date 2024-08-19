@@ -1,38 +1,14 @@
-"use client";
+"use client"
+import { useRouter } from "next/navigation";
 
-import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-
-export default function ResultPage() {
+export default function ResultPage(props) {
   const router = useRouter();
-  const [data, setData] = useState<{ allowedEndpoints: string[], disallowedEndpoints: string[] } | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const query = new URLSearchParams(window.location.search);
-    const type = query.get('type');
-    const dataParam = query.get('data');
-
-    if (dataParam) {
-      try {
-        const parsedData = JSON.parse(dataParam);
-        setData(parsedData);
-      } catch (e) {
-        setError('Failed to parse data');
-      }
-    } else {
-      setError('No data found');
-    }
-    setLoading(false);
-  }, [router]);
+  console.log(props)
 
   const handleScrapAnother = () => {
     router.push('/urlPage'); // Navigate to /urlPage
   };
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
 
   return (
     <main className="relative flex w-full h-screen bg-[url('/img/background.png')] bg-cover bg-center">
@@ -46,21 +22,21 @@ export default function ResultPage() {
           <div className="mb-4">
             <h3 className="text-xl font-semibold mb-2">Allowed Endpoints</h3>
             <ul>
-              {data?.allowedEndpoints.map((endpoint, index) => (
+              {/* {data?.allowedEndpoints.map((endpoint, index) => (
                 <li key={index} className="text-green-600">
                   {endpoint}
                 </li>
-              ))}
+              ))} */}
             </ul>
           </div>
           <div>
             <h3 className="text-xl font-semibold mb-2">Disallowed Endpoints</h3>
             <ul>
-              {data?.disallowedEndpoints.map((endpoint, index) => (
+              {/* {data?.disallowedEndpoints.map((endpoint, index) => (
                 <li key={index} className="text-red-600">
                   {endpoint}
                 </li>
-              ))}
+              ))} */}
             </ul>
           </div>
         </section>
