@@ -15,6 +15,7 @@ export async function POST(request: NextRequest) {
   if (responseData.status === 200) {
     return NextResponse.json({ data: responseData.data, status: 200 });
   }
+  return NextResponse.json({ data: responseData.data, status: 500 })
 }
 
 export async function GET(request: NextRequest) {
