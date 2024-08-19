@@ -17,7 +17,7 @@ puppeteer.use(proxyPlugin);
 async function getBroswer(url) {
   let browser = await puppeteer.launch({
     headless: true,
-    args: ["--ignore-certificate-errors"],
+    args: ["--ignore-certificate-errors", "--no-sandbox"],
     ignoreHTTPSErrors: true,
   });
 
