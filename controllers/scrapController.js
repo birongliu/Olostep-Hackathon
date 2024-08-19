@@ -19,22 +19,22 @@ puppeteer.use(proxyPlugin);
 async function installBroswer() {
   const chromePath = path.join(__dirname, ".cache", "puppeteer", "chrome");
   if (!existsSync(chromePath)) {
-    mkdirSync(chromePath);
+    mkdirSync(chromePath, { recursive: true });
   }
   const installedBrowsers = await puppeteerBrowsers.getInstalledBrowsers({
     cacheDir: chromePath,
   });
-  if (installedBrowsers.length) return true;
+  if (installedBrowsers.length === 1) return true;
   
-  await puppeteerBrowsers.install({
+  const broswer = await puppeteerBrowsers.install({
     browser: puppeteerBrowsers.Browser.CHROME,
     cacheDir: chromePath,
   });
-  return false;
+  return broswer;
 }
 
 async function getBroswer(url) {
-  await installBroswer();
+  //await installBroswer();
   let browser = await puppeteer.launch({
     headless: true,
     args: ["--ignore-certificate-errors"],
