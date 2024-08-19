@@ -69,9 +69,7 @@ export default function UrlPages() {
 
   return (
     <main
-      className={`relative flex w-full ${
-        links || data ? "h-full" : "h-screen"
-      } h-full bg-[url('/img/background.png')] bg-cover bg-center`}
+      className={`relative flex w-full h-screen bg-[url('/img/background.png')] bg-cover bg-center`}
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black opacity-15"></div>
@@ -132,17 +130,18 @@ export default function UrlPages() {
         </div>
 
         {/* Display Scraped Results */}
-        {links && (
+        {links && !links.allowedEndpoints && <div>No endpoint found</div>}
+        {links && links.allowedEndpoints && (
           <div className="scrollbar grid-cols-2 w-full gap-10 rounded-md h-64 mb-2 overflow-y-auto text-black border-black border p-4">
             <div
               className={` ${
-                links.allowedEndpoints.length > 0 ? "flex flex-col" : "hidden"
+                links.allowedEndpoints ? "flex flex-col" : "hidden"
               } justify-center items-center`}
             >
               <h1 className="text-2xl">Search Endpoint</h1>
               <div
                 className={`flex flex-col ${
-                  links.allowedEndpoints.length > 0 ? "block" : "hidden"
+                  links.allowedEndpoints ? "block" : "hidden"
                 }`}
               >
                 {links.allowedEndpoints.map((element) => (
