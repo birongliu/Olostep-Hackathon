@@ -12,7 +12,7 @@ connectDB();
 
 app.use(express.json({ extended: false }));
 app.use(cors({ origin: process.env.FRONTEND }))
-
+app.use("/api/health", (req, res) => res.status(200).json({ data: "ok", status: 200 }))
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/scraper', /*authMiddleware,*/ require('./routes/scrapRoutes'));
 
