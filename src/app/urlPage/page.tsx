@@ -23,21 +23,15 @@ export default function UrlPages() {
     allowedEndpoints: string[];
     disallowedEndpoints: string[];
   } | null>(null);
-  const [data, setData] = useState<DeepScrap>();
+  const [data, setData] = useState<DeepScrap | null>(null);
 
   //api request
   const handleScraping = async () => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/scraper/scrap`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ url }),
-        }
-      );
+      const response = await fetch("/api/scrap", {
+        body: JSON.stringify({ url }),
+        method: "POST"
+      })
       const responseData = await response.json();
       if(responseData.status === 200) {
         setScrapedData(responseData.data);
@@ -51,22 +45,14 @@ export default function UrlPages() {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/scraper/deep_scrap`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ url: searchTerm }),
-        }
-      );
+      const response = await fetch(`/api/scrap?url=${searchTerm}`)
+      const responseData = await response.json();
+      console.log(responseData)
 
-      const ctx = await response.json();
-      setData(ctx.data);
-      console.log(ctx)
+      setData(responseData.data);
     } catch (error) {
       console.error("Error during deep scraping:", error);
+      setData(null)
     }
   };
 
