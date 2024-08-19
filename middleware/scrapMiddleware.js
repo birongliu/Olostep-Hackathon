@@ -1,9 +1,8 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
-const robotsParser = require('robots-parser');
+import axios  from 'axios';
+import * as cheerio from 'cheerio';
+import robotsParser from 'robots-parser';
 
 const checkUrl = async (url) => {
-  const fetch = (await import('node-fetch')).default;
   try {
     new URL(url);
 
@@ -75,37 +74,6 @@ function classifyEndpoints(links, robots) {
 
   return { allowed, disallowed };
 }
-// async function extractAndSaveData(page) {
-//   const pageContent = await page.content();
-//   console.log('Full page content:\n', pageContent);
-//   try {
-//     const extractedData = await page.evaluate(() => {
-//       const data = {};
-//       data.title = document.querySelector('title')?.innerText || '';
-//       data.headings = Array.from(
-//         document.querySelectorAll('h1, h2, h3, h4, h5, h6')
-//       ).map((heading) => heading.innerText);
-//       data.links = Array.from(document.querySelectorAll('a'))
-//         .map((link) => ({
-//           text: link.innerText.trim(),
-//           href: link.href,
-//         }))
-//         .filter((link) => link.text);
-//       data.paragraphs = Array.from(document.querySelectorAll('p')).map(
-//         (paragraph) => paragraph.innerText
-//       );
-//       return data;
-//     });
-
-//     const filePath = path.join(__dirname, 'scraped_data.json');
-//     fs.writeFileSync(filePath, JSON.stringify(extractedData, null, 2));
-//     console.log(`Data extracted and saved to ${filePath}`);
-//     return 0;
-//   } catch (e) {
-//     console.error('Data extraction failed', e);
-//     return 1;
-//   }
-// }
 
 function htmlFilter(data) {
   const filteredHeadings = data.headings.filter(
@@ -187,7 +155,7 @@ const analyzeData = async (data) => {
   }
 };
 
-module.exports = {
+export {
   fetchRobotsTxt,
   scrapeWebsite,
   classifyEndpoints,

@@ -1,12 +1,12 @@
-const { signupSchema, loginSchema } = require('../middleware/validationMiddleware');
-const User = require('../models/userModel');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+import { signupSchema, loginSchema } from '../middleware/validationMiddleware.js';
+import User from '../models/userModel.js';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   const { username, email, password } = req.body;
 
-  const validationResult = signupSchema.safeParse({ username, email, password });
+  validationResult = signupSchema.safeParse({ username, email, password });
 
   if (!validationResult.success) {
     return res.status(400).json({ status: 400, data: validationResult.error.errors });
@@ -47,7 +47,7 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body;
 
   const validationResult = loginSchema.safeParse({ email, password });

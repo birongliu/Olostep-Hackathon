@@ -1,6 +1,6 @@
 require('dotenv').config();
-const express = require('express');
-const router = express.Router();
+import express from('express');
+import router = express.Router();
 
 router.get('/api', (req, res) => {
   res.json({ message: 'API endpoint' });

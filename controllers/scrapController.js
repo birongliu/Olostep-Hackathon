@@ -1,23 +1,24 @@
-const {
+import {
   fetchRobotsTxt,
   scrapeWebsite,
   classifyEndpoints,
   extractData,
   analyzeData,
   checkUrl,
-} = require("../middleware/scrapMiddleware");
+} from "../middleware/scrapMiddleware.js";
 
-const puppeteer = require("puppeteer-extra");
-const proxyPlugin = require("puppeteer-extra-plugin-proxy");
-const ScrapedData = require("../models/scrapModel");
+import puppeteer  from "puppeteer-extra";
+import proxyPlugin from "puppeteer-extra-plugin-proxy"
+import ScrapedData  from "../models/scrapModel.js";
 
 puppeteer.use(proxyPlugin);
 
+
 async function getBroswer(url) {
-  //await installBroswer();
+  await installBroswer();
   let browser = await puppeteer.launch({
     headless: true,
-    args: ["--ignore-certificate-errors", '--no-sandbox'],
+    args: ["--ignore-certificate-errors"],
     ignoreHTTPSErrors: true,
   });
 
@@ -31,7 +32,7 @@ async function getBroswer(url) {
   return { browser, page };
 }
 
-exports.scrap = async (req, res) => {
+export const scrap = async (req, res) => {
   const { url } = req.body;
   console.log(req.body);
 
@@ -77,45 +78,8 @@ exports.scrap = async (req, res) => {
   }
 };
 
-// exports.deep_scrap = async (req, res) => {
-//   const { url } = req.body;
 
-//   if (!url) {
-//     return res.status(400).json({ error: 'URL is required' });
-//   }
-//   let browser;
-//   try {
-//     browser = await puppeteer.launch({
-//       headless: true,
-//       args: ['--ignore-certificate-errors'],
-//       ignoreHTTPSErrors: true,
-//     });
-
-//     const page = await browser.newPage();
-//     page.setDefaultNavigationTimeout(3 * 60 * 1000);
-
-//     await page.goto(url, {
-//       waitUntil: 'domcontentloaded',
-//     });
-
-//     const data = await extractAndSaveData(page);
-//     const analysis = await analyzeData(data);
-//     if (data) {
-//       res.json({
-//         data,
-//         analysis,
-//       });
-//       // res.status(200).json({ message: 'Data has been extracted and saved.' });
-//     } else {
-//       res.status(500).json({ error: 'Failed to scrape the URL' });
-//     }
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//     console.log(error);
-//   }
-// };
-
-exports.deep_scrap = async (req, res) => {
+export const deep_scrap = async (req, res) => {
   const { url } = req.body;
 
   if (!checkUrl(url)) {

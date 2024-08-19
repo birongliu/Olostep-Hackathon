@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Here we go.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
@@ -19,7 +20,6 @@
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.8.0",
     "mongoose": "^8.5.3",
-    "node-fetch": "^3.3.2",
     "puppeteer": "^23.1.0",
     "puppeteer-core": "^23.1.0",
     "puppeteer-extra": "^3.3.6",

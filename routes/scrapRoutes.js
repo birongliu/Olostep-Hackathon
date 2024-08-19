@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { scrap, deep_scrap } = require('../controllers/scrapController');
+import { scrap, deep_scrap } from '../controllers/scrapController.js';
 
 router.post('/scrap', scrap);
 router.post('/deep_scrap', deep_scrap);
 
-module.exports = router;
+export default router;

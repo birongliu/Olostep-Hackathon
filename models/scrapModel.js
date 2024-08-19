@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const scrapedDataSchema = new mongoose.Schema({
   title: {
@@ -46,4 +46,4 @@ const scrapedDataSchema = new mongoose.Schema({
 
 const ScrapedData = mongoose.model('ScrapedData', scrapedDataSchema);
 
-module.exports = ScrapedData;
+export default ScrapedData;
