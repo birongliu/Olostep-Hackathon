@@ -34,7 +34,6 @@ export async function GET(request: NextRequest) {
     }
   );
   const data = await response.json()
-  if (response.status === 200) {
-    return NextResponse.json({ data: data.data, status: 200 });
-  }  
+  return NextResponse.json({ data: data.data, status: 200 });
+  
 }
