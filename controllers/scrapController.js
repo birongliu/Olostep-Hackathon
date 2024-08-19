@@ -5,17 +5,39 @@ const {
   extractData,
   analyzeData,
   checkUrl,
-} = require('../middleware/scrapMiddleware');
+} = require("../middleware/scrapMiddleware");
 
-const puppeteer = require('puppeteer-extra');
-const proxyPlugin = require('puppeteer-extra-plugin-proxy');
-const ScrapedData = require('../models/scrapModel');
+const puppeteer = require("puppeteer-extra");
+const proxyPlugin = require("puppeteer-extra-plugin-proxy");
+const ScrapedData = require("../models/scrapModel");
+const puppeteerBrowsers = require("@puppeteer/browsers");
+const path = require("path");
+const { existsSync, mkdirSync } = require("fs");
+
 puppeteer.use(proxyPlugin);
 
+async function installBroswer() {
+  const chromePath = path.join(__dirname, ".cache", "puppeteer", "chrome");
+  if (!existsSync(chromePath)) {
+    mkdirSync(chromePath);
+  }
+  const installedBrowsers = await puppeteerBrowsers.getInstalledBrowsers({
+    cacheDir: chromePath,
+  });
+  if (installedBrowsers.length) return true;
+  
+  await puppeteerBrowsers.install({
+    browser: puppeteerBrowsers.Browser.CHROME,
+    cacheDir: chromePath,
+  });
+  return false;
+}
+
 async function getBroswer(url) {
+  await installBroswer();
   let browser = await puppeteer.launch({
     headless: true,
-    args: ['--ignore-certificate-errors'],
+    args: ["--ignore-certificate-errors"],
     ignoreHTTPSErrors: true,
   });
 
@@ -23,50 +45,42 @@ async function getBroswer(url) {
   page.setDefaultNavigationTimeout(3 * 60 * 1000);
 
   await page.goto(url, {
-    waitUntil: 'domcontentloaded',
+    waitUntil: "domcontentloaded",
   });
 
-  return {browser, page};
-
+  return { browser, page };
 }
 
 exports.scrap = async (req, res) => {
   const { url } = req.body;
-  console.log(req.body)
+  console.log(req.body);
 
   if (!checkUrl(url)) {
-    return res.status(400).json({ status: 400, data: 'URL is not found' });
+    return res.status(400).json({ status: 400, data: "URL is not found" });
   }
 
   if (!url) {
-    return res.status(400).json({ status: 400, data: 'URL is required' });
+    return res.status(400).json({ status: 400, data: "URL is required" });
   }
 
   try {
     const robots = await fetchRobotsTxt(url);
     if (!robots) {
-      console.log('No robots.txt found, proceeding without restrictions.');
+      console.log("No robots.txt found, proceeding without restrictions.");
     }
 
     const links = await scrapeWebsite(url);
     if (!links.length) {
-      console.log('No endpoints found on the website.');
-      // return res
-      //   .status(404)
-      //   .json({ status: 404, data: 'No endpoints found on the website' });
+      console.log("No endpoints found on the website.");
       const browser = await getBroswer(url);
-      console.log(browser)
+      console.log(browser);
       const extractedData = await extractData(browser.page);
-      return res.status(200).json({ data: classifyEndpoints(extractedData.links), status: 200 })
+      return res
+        .status(200)
+        .json({ data: classifyEndpoints(extractedData.links), status: 200 });
     }
 
     const { allowed, disallowed } = classifyEndpoints(links, robots);
-
-    // console.log('Allowed Endpoints:');
-    // allowed.forEach((link) => console.log(link));
-
-    // console.log('\nDisallowed Endpoints:');
-    // disallowed.forEach((link) => console.log(link));
 
     res.json({
       status: 200,
@@ -76,10 +90,10 @@ exports.scrap = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error('Error during scraping:', error.message);
+    console.error("Error during scraping:", error.message);
     res
       .status(500)
-      .json({ status: 500, data: 'An error occurred during scraping' });
+      .json({ status: 500, data: "An error occurred during scraping" });
   }
 };
 
@@ -125,19 +139,19 @@ exports.deep_scrap = async (req, res) => {
   const { url } = req.body;
 
   if (!checkUrl(url)) {
-    return res.status(400).json({ status: 400, data: 'URL is not found' });
+    return res.status(400).json({ status: 400, data: "URL is not found" });
   }
 
   if (!url) {
-    return res.status(400).json({ error: 'URL is required' });
+    return res.status(400).json({ error: "URL is required" });
   }
 
-  let {browser, page } = await getBroswer(url);
+  let { browser, page } = await getBroswer(url);
 
   try {
     const data = await extractData(page);
     const analysis = await analyzeData(data);
-    console.log(analysis)
+    console.log(analysis);
     if (data) {
       // Filter out links without a valid href
       const filteredLinks = data.links
@@ -157,25 +171,25 @@ exports.deep_scrap = async (req, res) => {
         scrapedData.links = filteredLinks;
         scrapedData.paragraphs = data.paragraphs;
         scrapedData.analysisSummary =
-          analysis.choices[0]?.message?.content || '';
+          analysis.choices[0]?.message?.content || "";
 
         await scrapedData.save(); // Save the updated record
-        console.log('Updated existing record for URL:', url);
+        console.log("Updated existing record for URL:", url);
       } else {
         // Create a new instance of the ScrapedData model
-        console.log(analysis)
-        const analysisData = analysis.choices[0]
+        console.log(analysis);
+        const analysisData = analysis.choices[0];
         scrapedData = new ScrapedData({
           title: data.title,
           url: url,
           headings: data.headings,
           links: filteredLinks,
           paragraphs: data.paragraphs,
-          analysisSummary: analysisData ? analysisData.message.content  : '',
+          analysisSummary: analysisData ? analysisData.message.content : "",
         });
 
         await scrapedData.save(); // Save the new record
-        console.log('Saved new record for URL:', url);
+        console.log("Saved new record for URL:", url);
       }
 
       return res.status(200).json({
@@ -186,7 +200,7 @@ exports.deep_scrap = async (req, res) => {
         },
       });
     } else {
-      res.status(500).json({ error: 'Failed to scrape the URL' });
+      res.status(500).json({ error: "Failed to scrape the URL" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
