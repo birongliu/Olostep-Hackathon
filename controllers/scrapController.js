@@ -2,7 +2,7 @@ const {
   fetchRobotsTxt,
   scrapeWebsite,
   classifyEndpoints,
-  extractAndSaveData,
+  extractData,
   analyzeData,
   checkUrl,
 } = require('../middleware/scrapMiddleware');
@@ -12,8 +12,27 @@ const proxyPlugin = require('puppeteer-extra-plugin-proxy');
 const ScrapedData = require('../models/scrapModel');
 puppeteer.use(proxyPlugin);
 
+async function getBroswer(url) {
+  let browser = await puppeteer.launch({
+    headless: true,
+    args: ['--ignore-certificate-errors'],
+    ignoreHTTPSErrors: true,
+  });
+
+  const page = await browser.newPage();
+  page.setDefaultNavigationTimeout(3 * 60 * 1000);
+
+  await page.goto(url, {
+    waitUntil: 'domcontentloaded',
+  });
+
+  return {browser, page};
+
+}
+
 exports.scrap = async (req, res) => {
   const { url } = req.body;
+  console.log(req.body)
 
   if (!checkUrl(url)) {
     return res.status(400).json({ status: 400, data: 'URL is not found' });
@@ -32,9 +51,13 @@ exports.scrap = async (req, res) => {
     const links = await scrapeWebsite(url);
     if (!links.length) {
       console.log('No endpoints found on the website.');
-      return res
-        .status(404)
-        .json({ status: 404, data: 'No endpoints found on the website' });
+      // return res
+      //   .status(404)
+      //   .json({ status: 404, data: 'No endpoints found on the website' });
+      const browser = await getBroswer(url);
+      console.log(browser)
+      const extractedData = await extractData(browser.page);
+      return res.status(200).json({ data: classifyEndpoints(extractedData.links), status: 200 })
     }
 
     const { allowed, disallowed } = classifyEndpoints(links, robots);
@@ -109,24 +132,12 @@ exports.deep_scrap = async (req, res) => {
     return res.status(400).json({ error: 'URL is required' });
   }
 
-  let browser;
+  let {browser, page } = await getBroswer(url);
+
   try {
-    browser = await puppeteer.launch({
-      headless: true,
-      args: ['--ignore-certificate-errors'],
-      ignoreHTTPSErrors: true,
-    });
-
-    const page = await browser.newPage();
-    page.setDefaultNavigationTimeout(3 * 60 * 1000);
-
-    await page.goto(url, {
-      waitUntil: 'domcontentloaded',
-    });
-
-    const data = await extractAndSaveData(page);
+    const data = await extractData(page);
     const analysis = await analyzeData(data);
-
+    console.log(analysis)
     if (data) {
       // Filter out links without a valid href
       const filteredLinks = data.links
@@ -152,13 +163,15 @@ exports.deep_scrap = async (req, res) => {
         console.log('Updated existing record for URL:', url);
       } else {
         // Create a new instance of the ScrapedData model
+        console.log(analysis)
+        const analysisData = analysis.choices[0]
         scrapedData = new ScrapedData({
           title: data.title,
           url: url,
           headings: data.headings,
           links: filteredLinks,
           paragraphs: data.paragraphs,
-          analysisSummary: analysis.choices[0]?.message?.content || '',
+          analysisSummary: analysisData ? analysisData.message.content  : '',
         });
 
         await scrapedData.save(); // Save the new record

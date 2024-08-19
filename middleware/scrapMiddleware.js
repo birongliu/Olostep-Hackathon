@@ -59,13 +59,19 @@ function classifyEndpoints(links, robots) {
   const allowed = [];
   const disallowed = [];
 
-  links.forEach((link) => {
-    if (robots && robots.isAllowed(link)) {
-      allowed.push(link);
-    } else {
-      disallowed.push(link);
-    }
-  });
+  if(robots) {
+    links.forEach((link) => {
+      if (robots && robots.isAllowed(link)) {
+        allowed.push(link);
+      } else {
+        disallowed.push(link);
+      }
+    });
+  } else {
+    links.forEach(link => {
+      allowed.push(link.href)
+    })
+  }
 
   return { allowed, disallowed };
 }
@@ -119,10 +125,7 @@ function htmlFilter(data) {
   };
 }
 
-async function extractAndSaveData(page) {
-  const pageContent = await page.content();
-  // console.log('Full page content:\n', pageContent);
-
+async function extractData(page) {
   try {
     const extractedData = await page.evaluate(() => {
       const data = {};
@@ -142,10 +145,6 @@ async function extractAndSaveData(page) {
 
     const filteredData = htmlFilter(extractedData);
     return filteredData;
-    // const filePath = path.join(__dirname, 'scraped_data.json');
-    // fs.writeFileSync(filePath, JSON.stringify(filteredData, null, 2));
-    // console.log(`Data extracted and saved to ${filePath}`);
-    // return 0;
   } catch (e) {
     console.error('Data extraction failed', e);
     return 1;
@@ -162,11 +161,11 @@ const analyzeData = async (data) => {
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENROUTER_API_KEY}`,
+          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'openai/gpt-3.5-turbo',
+          model: 'meta-llama/llama-3.1-8b-instruct:free',
           messages: [
             {
               role: 'system',
@@ -192,8 +191,7 @@ module.exports = {
   fetchRobotsTxt,
   scrapeWebsite,
   classifyEndpoints,
-  // scrapeEndpoint,
-  extractAndSaveData,
+  extractData,
   analyzeData,
   checkUrl,
 };
