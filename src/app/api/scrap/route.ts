@@ -12,10 +12,9 @@ export async function POST(request: NextRequest) {
     body: JSON.stringify({ url: data.url }),
   });
   const responseData = await response.json();
-  if (responseData.status === 200) {
-    return NextResponse.json({ data: responseData.data, status: 200 });
-  }
-  return NextResponse.json({ data: responseData.data, status: 500 })
+
+  return NextResponse.json({ data: responseData.data, status: 200 });
+  
 }
 
 export async function GET(request: NextRequest) {
